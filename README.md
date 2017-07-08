@@ -6,7 +6,7 @@ Example site : http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
 
 ## Install
 
-In you Zeronet repository :
+In you Zeronet folder :
 ```
 cd plugins
 git clone git@github.com:rllola/zeronet-torrent-plugin.git Torrent
