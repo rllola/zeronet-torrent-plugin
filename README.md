@@ -25,7 +25,7 @@ You need to first [install homebrew](https://brew.sh) and python-pip (`sudo easy
 Then in a terminal :
 ```
 brew update
-sudo brew install autoconf automake libtool openssl boost boost-python
+brew install autoconf automake libtool openssl boost boost-python
 sudo -H pip2 install gevent msgpack-python
 xcode-select --install
 ```
