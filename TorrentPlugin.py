@@ -2,10 +2,20 @@ import logging
 import libtorrent
 import time
 import base64
+import gevent
+from AlertEncoder import AlertEncoder
 
 from Plugin import PluginManager
 
-#log = logging.getLogger("TorrentPlugin")
+def popAlerts(session):
+    while 1:
+        alertsList = session.pop_alerts()
+        # Need encoding
+        for alert in alertsList:
+            result = AlertEncoder(alert)
+            for instanceOfUiWebsocketPlugin in UiWebsocketPlugin._instances:
+                instanceOfUiWebsocketPlugin.cmd(alert.what(), result.get())
+        gevent.sleep(1)
 
 @PluginManager.registerTo("UiWebsocket")
 class UiWebsocketPlugin(object):
@@ -14,6 +24,12 @@ class UiWebsocketPlugin(object):
 
     session = libtorrent.session()
     session.listen_on(6881, 6891)
+    gevent.spawn(popAlerts, session)
+    _instances = []
+
+    def __init__(self, *args, **kwargs):
+        super(UiWebsocketPlugin, self).__init__(*args, **kwargs)
+        UiWebsocketPlugin._instances.append(self)
 
     def actionAddTorrent(self, to, torrentIdentifier):
         save_path = './data/' + self.site.address + '/downloads/'
@@ -43,9 +59,6 @@ class UiWebsocketPlugin(object):
         else:
             info_hash = h.info_hash()
             self.response(to, {'info_hash': str(info_hash)})
-
-    #def actionPopAlerts(self, to):
-    #    alert_lists = session.pop_alerts()
 
     def actionTorrentStatus(self, to, info_hash):
         info_hash = libtorrent.sha1_hash(info_hash.decode('hex'))
@@ -80,3 +93,17 @@ class UiWebsocketPlugin(object):
 
     def actionHelloWorld(self, to):
         self.response(to, {'message':'Hello World'})
+
+    def actionReadPiece(self, to, info_hash, piece_index):
+        info_hash = libtorrent.sha1_hash(info_hash.decode('hex'))
+        h = self.session.find_torrent(info_hash)
+        if h.is_valid():
+            h.read_piece(piece_index)
+            self.response(to, 'ok')
+        else:
+            self.response(to, {'error': 'Torrent not found'})
+
+    #def __del__(self):
+    #    print 'DESTROY !'
+    #    if self in UiWebsocketPlugin._instances:
+    #        print 'Hola !'
