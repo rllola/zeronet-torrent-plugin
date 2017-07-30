@@ -12,8 +12,7 @@ class AlertEncoder(object):
             print 'Add Torrent Alert !'
         elif self.response['what'] == 'piece_finished_alert':
             self.encodePieceFinishedAlert()
-        else:
-            print 'Unknown alert !'
+
 
     def encodeAlert(self):
         self.response = {
@@ -23,7 +22,7 @@ class AlertEncoder(object):
         }
 
     def encodeReadPieceAlert(self):
-        if hasattr(self.alert, 'error') :
+        if hasattr(self.alert, 'error'):
             self.response['error'] = self.alert.error
         else :
             self.response['pieceIndex'] = self.alert.piece

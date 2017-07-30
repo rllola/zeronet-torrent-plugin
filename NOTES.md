@@ -38,3 +38,24 @@ zeroframe.cmd('helloWorld', {}, (response) => {
   console.log(response) // print 'Hello World' message
 })
 ```
+
+## Install libtorrent
+
+
+### For Linux
+
+Be sure to have libboost-all-dev installed.
+
+```
+cd libtorrent
+git checkout RC_1_1_
+./bootstrap.sh
+./configure --enable-python-binding
+make install
+```
+
+Test :
+```
+python
+>> import libtorent
+```

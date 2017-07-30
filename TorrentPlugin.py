@@ -15,13 +15,13 @@ def popAlerts(session):
             result = AlertEncoder(alert)
             for instanceOfUiWebsocketPlugin in UiWebsocketPlugin._instances:
                 instanceOfUiWebsocketPlugin.cmd(alert.what(), result.get())
-        gevent.sleep(0.450)
+        gevent.sleep(0.250)
 
 @PluginManager.registerTo("UiWebsocket")
 class UiWebsocketPlugin(object):
 
     # Initiate libtorrent session
-    session = libtorrent.session({'listen_interfaces':'0.0.0.0:6881'})
+    session = libtorrent.session({'listen_interfaces':'0.0.0.0:6881', 'alert_mask': libtorrent.alert.category_t.progress_notification})
     gevent.spawn(popAlerts, session)
     _instances = []
 
@@ -80,7 +80,6 @@ class UiWebsocketPlugin(object):
 
             arrayFiles = []
             for file in files:
-                print file.path
                 arrayFiles.append({'path': file.path, \
                                     'offset': file.offset, \
                                     'size': file.size \
@@ -108,7 +107,6 @@ class UiWebsocketPlugin(object):
         h = self.session.find_torrent(info_hash)
         if h.is_valid():
             response = h.have_piece(piece_index)
-            print response
             self.response(to, response)
         else:
             self.response(to, {'error': 'Torrent not found'})
