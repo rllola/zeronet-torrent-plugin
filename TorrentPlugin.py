@@ -21,9 +21,7 @@ def popAlerts(session):
 class UiWebsocketPlugin(object):
 
     # Initiate libtorrent session
-
-    session = libtorrent.session()
-    session.listen_on(6881, 6891)
+    session = libtorrent.session({'listen_interfaces':'0.0.0.0:6881'})
     gevent.spawn(popAlerts, session)
     _instances = []
 
@@ -112,6 +110,19 @@ class UiWebsocketPlugin(object):
             response = h.have_piece(piece_index)
             print response
             self.response(to, response)
+        else:
+            self.response(to, {'error': 'Torrent not found'})
+
+
+    def actionPrioritizePiece(self, to, info_hash, piece_index, new_priority):
+        info_hash = libtorrent.sha1_hash(info_hash.decode('hex'))
+        h = self.session.find_torrent(info_hash)
+        if h.is_valid():
+            if 0 <= new_priority <= 7 :
+                h.piece_priority(piece_index, new_priority)
+                self.response(to, 'ok')
+            else :
+                self.response(to, {'error': 'new_priority should be an integer bewteen 0 and 7'})
         else:
             self.response(to, {'error': 'Torrent not found'})
 
