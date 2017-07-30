@@ -6,6 +6,8 @@ class AlertEncoder(object):
         self.alert = alert
         self.encodeAlert()
 
+        print self.response['what']
+
         if self.response['what'] == 'read_piece_alert':
             self.encodeReadPieceAlert()
         elif self.response['what'] == 'add_torrent_alert':
@@ -21,9 +23,14 @@ class AlertEncoder(object):
         }
 
     def encodeReadPieceAlert(self):
-        self.response['pieceIndex'] = self.alert.piece
-        self.response['size'] = self.alert.size
-        self.response['buffer'] = base64.b64encode(self.alert.buffer)
+        print 'Received read_piece_alert for piece ' + str(self.alert.piece)
+        if hasattr(self.alert, 'error') :
+            print self.alert.error
+            self.response['error'] = self.alert.error
+        else :
+            self.response['pieceIndex'] = self.alert.piece
+            self.response['size'] = self.alert.size
+            self.response['buffer'] = base64.b64encode(self.alert.buffer)
 
     def get(self):
         return self.response

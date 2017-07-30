@@ -15,7 +15,7 @@ def popAlerts(session):
             result = AlertEncoder(alert)
             for instanceOfUiWebsocketPlugin in UiWebsocketPlugin._instances:
                 instanceOfUiWebsocketPlugin.cmd(alert.what(), result.get())
-        gevent.sleep(1)
+        gevent.sleep(0.450)
 
 @PluginManager.registerTo("UiWebsocket")
 class UiWebsocketPlugin(object):
@@ -82,17 +82,19 @@ class UiWebsocketPlugin(object):
 
             arrayFiles = []
             for file in files:
-                arrayFiles.append(file.path)
+                print file.path
+                arrayFiles.append({'path': file.path, \
+                                    'offset': file.offset, \
+                                    'size': file.size \
+                                    })
 
             self.response(to, {'name': ti.name(), \
                                 'num_files' : ti.num_files(), \
-                                'files': arrayFiles \
+                                'files': arrayFiles, \
+                                'piece_length': ti.piece_length() \
                                  })
         else:
             self.response(to, {'error': 'Torrent not found'})
-
-    def actionHelloWorld(self, to):
-        self.response(to, {'message':'Hello World'})
 
     def actionReadPiece(self, to, info_hash, piece_index):
         info_hash = libtorrent.sha1_hash(info_hash.decode('hex'))
@@ -102,6 +104,19 @@ class UiWebsocketPlugin(object):
             self.response(to, 'ok')
         else:
             self.response(to, {'error': 'Torrent not found'})
+
+    def actionHavePiece(self, to, info_hash, piece_index):
+        info_hash = libtorrent.sha1_hash(info_hash.decode('hex'))
+        h = self.session.find_torrent(info_hash)
+        if h.is_valid():
+            response = h.have_piece(piece_index)
+            print response
+            self.response(to, response)
+        else:
+            self.response(to, {'error': 'Torrent not found'})
+
+    def actionHelloWorld(self, to):
+        self.response(to, {'message':'Hello World'})
 
     #def __del__(self):
     #    print 'DESTROY !'
