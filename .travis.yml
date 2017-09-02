@@ -6,7 +6,6 @@ matrix:
       os: osx
       before_install:
         - brew update
-        - brew install python
     - language: python
       os: linux
 addons:
