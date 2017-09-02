@@ -1,11 +1,14 @@
 #dist: trusty
 #sudo: required
-language: python
-python:
-  - "2.7"
-os:
-  - osx
-  - linux
+matrix:
+  include:
+    - language: generic
+      os: osx
+      before_install:
+        - brew update
+        - brew install python
+    - language: python
+      os: linux
 addons:
   apt:
     sources:
