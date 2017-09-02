@@ -1,0 +1,20 @@
+dist: trusty
+sudo: required
+language: python
+os:
+  - osx
+  - linux
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports
+    packages:
+      - cmake
+      - cmake-data
+before_install:
+  - pip install conan
+  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
+install:
+  - conan install -g txt --build Boost OpenSSL
+script:
+  - python test/test.py
