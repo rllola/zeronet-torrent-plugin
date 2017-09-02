@@ -1,13 +1,16 @@
-#dist: trusty
-#sudo: required
+dist: trusty
+sudo: required
 matrix:
   include:
     - language: generic
       os: osx
       before_install:
         - brew update
+        - brew install pip
     - language: python
       os: linux
+      dist:
+        - trusty
 addons:
   apt:
     sources:
