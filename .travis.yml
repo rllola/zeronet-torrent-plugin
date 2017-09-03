@@ -6,7 +6,7 @@ matrix:
       os: osx
       before_install:
         - brew update
-        - brew install pip
+        - easy_install pip
     - language: python
       os: linux
       dist:
