@@ -11,6 +11,6 @@ before_install:
   - pip install --user conan
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
-  - conan install -g txt --build Boost OpenSSL
+  - travis_wait conan install -g txt --build Boost OpenSSL
 script:
   - python test/test.py
