@@ -57,5 +57,5 @@ make install
 Test :
 ```
 python
->> import libtorent
-```
+>> import libtorrent
+``` 

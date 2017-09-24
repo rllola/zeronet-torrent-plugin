@@ -1,5 +1,0 @@
-[requires]
-LibtorrentPython/1.1.4@lola/stable
-
-[generators]
-cmake

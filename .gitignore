@@ -8,3 +8,7 @@ conanbuildinfo.cmake
 conanbuildinfo.txt
 conaninfo.txt
 CMakeFiles/
+libtorrent.so
+Makefile
+CMakeCache.txt
+cmake_install.cmake
