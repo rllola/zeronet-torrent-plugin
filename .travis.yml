@@ -1,16 +1,5 @@
 dist: trusty
 sudo: required
-matrix:
-  include:
-    - language: generic
-      os: osx
-      before_install:
-        - brew update
-        - easy_install pip
-    - language: python
-      os: linux
-      dist:
-        - trusty
 addons:
   apt:
     sources:
@@ -19,7 +8,7 @@ addons:
       - cmake
       - cmake-data
 before_install:
-  - pip install conan
+  - pip install --user conan
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install -g txt --build Boost OpenSSL
