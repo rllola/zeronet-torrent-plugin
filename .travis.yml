@@ -14,4 +14,4 @@ install:
   - conan install --build=missing
   - conan build
 script:
-  - python test/test.py
+  - python test.py
