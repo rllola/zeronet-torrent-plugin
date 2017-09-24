@@ -11,6 +11,6 @@ before_install:
   - pip install --user conan
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
-  - conan install
+  - conan install --build=missing
 script:
   - python test/test.py
