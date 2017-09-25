@@ -1,9 +1,9 @@
-language: python
 matrix:
     include:
       - os: linux
         dist: trusty
         sudo: required
+        language: python
       - os: osx
         language: generic
 addons:
@@ -14,9 +14,7 @@ addons:
       - cmake
       - cmake-data
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python; fi
-  - if [ "$TRAVIS_OS_NAME" = osx ]; then pip install conan; else pip install --user conan; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing
