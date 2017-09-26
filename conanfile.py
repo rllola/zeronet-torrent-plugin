@@ -30,7 +30,7 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
-        self.run('cmake src %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, self.options.python_version))
+        self.run('cmake src %s' % (cmake.command_line))
         self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):
