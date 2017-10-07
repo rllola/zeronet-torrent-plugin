@@ -2,6 +2,7 @@ from conans import ConanFile, tools, CMake
 import sys
 from distutils import sysconfig
 import os.path as p
+import platform
 
 PY_MAJOR, PY_MINOR = sys.version_info[ 0 : 2 ]
 
