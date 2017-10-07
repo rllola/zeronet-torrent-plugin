@@ -34,8 +34,6 @@ else()
   find_package(PythonLibs REQUIRED)
 endif()
 
-MESSAGE(STATUS "Python : ${PYTHON_LIBRARY}")
-
 # The above sometimes returns version numbers like "3.4.3+"; the "+" must be removed for the next lines to work
 string(REPLACE "+" "" PYTHONLIBS_VERSION_STRING "+${PYTHONLIBS_VERSION_STRING}")
 
