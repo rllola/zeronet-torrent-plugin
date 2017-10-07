@@ -5,11 +5,7 @@ import os.path as p
 
 PY_MAJOR, PY_MINOR = sys.version_info[ 0 : 2 ]
 
-def FindPythonLibraries():
-  include_dir = sysconfig.get_python_inc()
-  library_dirs = GetPossiblePythonLibraryDirectories()
-
- def GetGlobalPythonPrefix():
+def GetGlobalPythonPrefix():
   # In a virtualenv, sys.real_prefix points to the parent Python prefix.
   if hasattr( sys, 'real_prefix' ):
     return sys.real_prefix
@@ -65,7 +61,8 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
-        pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
+        pythonpaths = "-DPYTHON_INCLUDE_DIR=" + sysconfig.get_python_inc() + " -DPYTHON_LIBRARY=" + GetPossiblePythonLibraryDirectories
+        print pythonpaths
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
 
