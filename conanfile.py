@@ -61,7 +61,7 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
-        pythonpaths = "-DPYTHON_INCLUDE_DIR=" + sysconfig.get_python_inc() + " -DPYTHON_LIBRARY=" + GetPossiblePythonLibraryDirectories
+        pythonpaths = "-DPYTHON_INCLUDE_DIR=" + sysconfig.get_python_inc() + " -DPYTHON_LIBRARY=" + str(GetPossiblePythonLibraryDirectories())
         print pythonpaths
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
