@@ -1,4 +1,39 @@
 from conans import ConanFile, tools, CMake
+import sys
+from distutils import sysconfig
+import os.path as p
+
+PY_MAJOR, PY_MINOR = sys.version_info[ 0 : 2 ]
+
+def FindPythonLibraries():
+  include_dir = sysconfig.get_python_inc()
+  library_dirs = GetPossiblePythonLibraryDirectories()
+
+ def GetGlobalPythonPrefix():
+  # In a virtualenv, sys.real_prefix points to the parent Python prefix.
+  if hasattr( sys, 'real_prefix' ):
+    return sys.real_prefix
+  # In a pyvenv (only available on Python 3), sys.base_prefix points to the
+  # parent Python prefix. Outside a pyvenv, it is equal to sys.prefix.
+  if PY_MAJOR >= 3:
+    return sys.base_prefix
+  return sys.prefix
+
+
+def GetPossiblePythonLibraryDirectories():
+  prefix = GetGlobalPythonPrefix()
+
+  if platform.system() == 'Windows':
+    return [ p.join( prefix, 'libs' ) ]
+  # On pyenv and some distributions, there is no Python dynamic library in the
+  # directory returned by the LIBPL variable. Such library can be found in the
+  # "lib" or "lib64" folder of the base Python installation.
+  return [
+    sysconfig.get_config_var( 'LIBPL' ),
+    p.join( prefix, 'lib64' ),
+    p.join( prefix, 'lib' )
+  ]
+
 
 class LibtorrentPythonConan(ConanFile):
     name = "LibtorrentPython"
@@ -30,7 +65,8 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
-        self.run('cmake src %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, self.options.python_version))
+        pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
+        self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
 
     def package(self):

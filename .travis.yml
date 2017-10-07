@@ -2,9 +2,8 @@ matrix:
     include:
       - os: linux
         dist: trusty
-        sudo: false
-        # We want to avoid virtualenv for now
-        language: generic
+        sudo: required
+        language: python
       - os: osx
         language: generic
 addons:
@@ -15,8 +14,8 @@ addons:
       - cmake
       - cmake-data
 before_install:
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
- - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
+  - pip install conan
+  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing
   - conan build
