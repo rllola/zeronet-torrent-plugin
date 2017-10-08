@@ -44,6 +44,7 @@ def OnMac():
   return platform.system() == 'Darwin'
 
 def FindPythonLibraries():
+  print "FindPythonLibraries"
   include_dir = sysconfig.get_python_inc()
   library_dirs = GetPossiblePythonLibraryDirectories()
 
@@ -73,13 +74,17 @@ def FindPythonLibraries():
     major = PY_MAJOR, minor = PY_MINOR ), re.X )
   static_libraries = []
 
+  print "Ok"
+
   for library_dir in library_dirs:
+    print "In Da loop"
     if not p.exists( library_dir ):
       continue
 
     # Files are sorted so that we found the non-versioned Python library before
     # the versioned one.
     for filename in sorted( os.listdir( library_dir ) ):
+      print filename
       if dynamic_name.match( filename ):
         return p.join( library_dir, filename ), include_dir
 
@@ -87,6 +92,7 @@ def FindPythonLibraries():
         static_libraries.append( p.join( library_dir, filename ) )
 
   if static_libraries and not OnWindows():
+    print "Nah"
     dynamic_flag = ( '--enable-framework' if OnMac() else
                      '--enable-shared' )
     sys.exit( NO_DYNAMIC_PYTHON_ERROR.format( library = static_libraries[ 0 ],
