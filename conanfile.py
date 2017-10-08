@@ -4,6 +4,7 @@ from distutils import sysconfig
 import os.path as p
 import platform
 import re
+import os
 
 PY_MAJOR, PY_MINOR = sys.version_info[ 0 : 2 ]
 NO_DYNAMIC_PYTHON_ERROR = (
