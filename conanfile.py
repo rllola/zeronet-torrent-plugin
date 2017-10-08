@@ -3,6 +3,7 @@ import sys
 from distutils import sysconfig
 import os.path as p
 import platform
+import re
 
 PY_MAJOR, PY_MINOR = sys.version_info[ 0 : 2 ]
 NO_DYNAMIC_PYTHON_ERROR = (
@@ -12,6 +13,28 @@ NO_DYNAMIC_PYTHON_ERROR = (
   '  export PYTHON_CONFIGURE_OPTS="{flag}"\n'
 'before installing a Python version.' )
 NO_PYTHON_LIBRARY_ERROR = 'ERROR: unable to find an appropriate Python library.'
+
+# Regular expressions used to find static and dynamic Python libraries.
+# Notes:
+#  - Python 3 library name may have an 'm' suffix on Unix platforms, for
+#    instance libpython3.3m.so;
+#  - the linker name (the soname without the version) does not always
+#    exist so we look for the versioned names too;
+#  - on Windows, the .lib extension is used instead of the .dll one. See
+#    http://xenophilia.org/winvunix.html to understand why.
+STATIC_PYTHON_LIBRARY_REGEX = '^libpython{major}\.{minor}m?\.a$'
+DYNAMIC_PYTHON_LIBRARY_REGEX = """
+  ^(?:
+  # Linux, BSD
+  libpython{major}\.{minor}m?\.so(\.\d+)*|
+  # OS X
+  libpython{major}\.{minor}m?\.dylib|
+  # Windows
+  python{major}{minor}\.lib|
+  # Cygwin
+  libpython{major}\.{minor}\.dll\.a
+  )$
+"""
 
 def OnWindows():
   return platform.system() == 'Windows'
