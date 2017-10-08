@@ -78,6 +78,7 @@ def FindPythonLibraries():
 
   for library_dir in library_dirs:
     print "In Da loop"
+    print  p.exists( library_dir )
     if not p.exists( library_dir ):
       continue
 
