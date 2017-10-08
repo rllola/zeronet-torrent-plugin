@@ -39,6 +39,9 @@ DYNAMIC_PYTHON_LIBRARY_REGEX = """
 def OnWindows():
   return platform.system() == 'Windows'
 
+def OnMac():
+  return platform.system() == 'Darwin'
+
 def FindPythonLibraries():
   include_dir = sysconfig.get_python_inc()
   library_dirs = GetPossiblePythonLibraryDirectories()
@@ -146,7 +149,9 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self.settings)
+        print "Looking for Python libraries"
         library_dirs, include_dir = FindPythonLibraries()
+        print "We got it"
         pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
         print pythonpaths
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
