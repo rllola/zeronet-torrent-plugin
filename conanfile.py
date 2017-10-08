@@ -83,6 +83,7 @@ def FindPythonLibraries():
 
     # Files are sorted so that we found the non-versioned Python library before
     # the versioned one.
+    print os.listdir( library_dir )
     for filename in sorted( os.listdir( library_dir ) ):
       print filename
       if dynamic_name.match( filename ):
