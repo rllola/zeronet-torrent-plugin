@@ -74,7 +74,7 @@ def FindPythonLibraries():
     major = PY_MAJOR, minor = PY_MINOR ), re.X )
   static_libraries = []
 
-  print "Ok"
+  print library_dirs
 
   for library_dir in library_dirs:
     print "In Da loop"
