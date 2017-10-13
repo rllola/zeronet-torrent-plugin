@@ -12,6 +12,7 @@ addons:
     packages:
       - cmake
       - cmake-data
+      - python-dev
 before_install:
   - pip install --user conan
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
