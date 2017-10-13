@@ -3,7 +3,7 @@ matrix:
     include:
       - os: linux
         dist: trusty
-        sudo: required
+        sudo: false
       - os: osx
 addons:
   apt:
@@ -13,7 +13,7 @@ addons:
       - cmake
       - cmake-data
 before_install:
-  - pip install conan
+  - pip install --user conan
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing
