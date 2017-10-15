@@ -14,7 +14,7 @@ addons:
       - cmake-data
       - python-dev
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; apt list --installed; fi
+  - apt list --installed
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
