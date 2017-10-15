@@ -2,7 +2,7 @@ language: generic
 matrix:
     include:
       - os: linux
-        dist: trusty
+        dist: xenial
         sudo: false
       - os: osx
 addons:
@@ -15,6 +15,11 @@ addons:
       - python-dev
       - python-all
       - python-all-dev
+      - python-gevent
+      - python-greenlet
+      - python-minimal
+      - python-msgpack
+      - python-wheel
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
