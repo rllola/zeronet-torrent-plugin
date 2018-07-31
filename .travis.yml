@@ -1,5 +1,10 @@
-dist: trusty
-sudo: required
+language: generic
+matrix:
+    include:
+      - os: linux
+        dist: xenial
+        sudo: false
+      - os: osx
 addons:
   apt:
     sources:
@@ -7,8 +12,16 @@ addons:
     packages:
       - cmake
       - cmake-data
+      - python-dev
+      - python-all
+      - python-all-dev
+      - python-gevent
+      - python-greenlet
+      - python-minimal
+      - python-msgpack
+      - python-wheel
 before_install:
-  - pip install --user conan
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing

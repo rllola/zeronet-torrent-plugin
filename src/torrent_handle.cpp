@@ -13,7 +13,6 @@
 #include "libtorrent/announce_entry.hpp"
 #include <libtorrent/storage.hpp>
 #include <libtorrent/file_pool.hpp>
-#include <boost/lexical_cast.hpp>
 #include "gil.hpp"
 
 using namespace boost::python;
@@ -340,9 +339,9 @@ namespace
     }
 }
 
-void connect_peer(torrent_handle& th, tuple ip, int source)
+void connect_peer(torrent_handle& th, tuple ip, int source, int flags)
 {
-    th.connect_peer(tuple_to_endpoint(ip), source);
+    th.connect_peer(tuple_to_endpoint(ip), source, flags);
 }
 
 std::vector<pool_file_status> file_status(torrent_handle const& h)
@@ -426,6 +425,7 @@ void bind_torrent_handle()
         .def(self == self)
         .def(self != self)
         .def(self < self)
+        .def("__hash__", (std::size_t (*)(torrent_handle const&))&libtorrent::hash_value)
         .def("get_peer_info", get_peer_info)
         .def("status", _(&torrent_handle::status), arg("flags") = 0xffffffff)
         .def("get_download_queue", get_download_queue)
@@ -516,7 +516,7 @@ void bind_torrent_handle()
         .def("set_ratio", _(&torrent_handle::set_ratio))
         .def("save_path", _(&torrent_handle::save_path))
 #endif
-        .def("connect_peer", &connect_peer)
+        .def("connect_peer", &connect_peer, (arg("ip"), arg("source") = 0, arg("flags") = 0xd))
         .def("set_max_uploads", _(&torrent_handle::set_max_uploads))
         .def("max_uploads", _(&torrent_handle::max_uploads))
         .def("set_max_connections", _(&torrent_handle::set_max_connections))

@@ -34,6 +34,8 @@ else()
   find_package(PythonLibs REQUIRED)
 endif()
 
+MESSAGE(STATUS "Python : ${PYTHON_LIBRARY}")
+
 # The above sometimes returns version numbers like "3.4.3+"; the "+" must be removed for the next lines to work
 string(REPLACE "+" "" PYTHONLIBS_VERSION_STRING "+${PYTHONLIBS_VERSION_STRING}")
 
@@ -152,4 +154,17 @@ elseif (UNIX)
 
   # .SO file extension on Linux/Mac OS
   set_target_properties(libtorrent PROPERTIES SUFFIX ".so")
+
+  # Strip unnecessary sections of the binary on Linux/Mac OS
+if(APPLE)
+  set_target_properties(pypoco PROPERTIES MACOSX_RPATH ".")
+  set_target_properties(pypoco PROPERTIES LINK_FLAGS "-undefined dynamic_lookup ")
+  if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+    add_custom_command(TARGET pypoco POST_BUILD COMMAND strip -u -r ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
+  endif()
+else()
+  if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+    add_custom_command(TARGET pypoco POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
+  endif()
+endif()
 endif()

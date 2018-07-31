@@ -17,6 +17,7 @@
 #include <libtorrent/time.hpp>
 #include <libtorrent/session_stats.hpp>
 #include <libtorrent/session_status.hpp>
+#include <libtorrent/peer_class_type_filter.hpp>
 
 #ifndef TORRENT_NO_DEPRECATE
 #include <libtorrent/extensions/lt_trackers.hpp>
@@ -611,6 +612,72 @@ namespace
 		ses.load_state(e, flags);
 	}
 
+	dict get_peer_class(lt::session& ses, int const pc)
+	{
+		lt::peer_class_info pci;
+		{
+			allow_threading_guard guard;
+			pci = ses.get_peer_class(pc);
+		}
+		dict ret;
+		ret["ignore_unchoke_slots"] = pci.ignore_unchoke_slots;
+		ret["connection_limit_factor"] = pci.connection_limit_factor;
+		ret["label"] = pci.label;
+		ret["upload_limit"] = pci.upload_limit;
+		ret["download_limit"] = pci.download_limit;
+		ret["upload_priority"] = pci.upload_priority;
+		ret["download_priority"] = pci.download_priority;
+		return ret;
+	}
+
+	void set_peer_class(lt::session& ses, int const pc, dict info)
+	{
+		lt::peer_class_info pci;
+		stl_input_iterator<std::string> i(info.keys()), end;
+		for (; i != end; ++i)
+		{
+			std::string const key = *i;
+
+			object const value = info[key];
+			if (key == "ignore_unchoke_slots")
+			{
+				pci.ignore_unchoke_slots = extract<bool>(value);
+			}
+			else if (key == "connection_limit_factor")
+			{
+				pci.connection_limit_factor = extract<int>(value);
+			}
+			else if (key == "label")
+			{
+				pci.label = extract<std::string>(value);
+			}
+			else if (key == "upload_limit")
+			{
+				pci.upload_limit = extract<int>(value);
+			}
+			else if (key == "download_limit")
+			{
+				pci.download_limit = extract<int>(value);
+			}
+			else if (key == "upload_priority")
+			{
+				pci.upload_priority = extract<int>(value);
+			}
+			else if (key == "download_priority")
+			{
+				pci.download_priority = extract<int>(value);
+			}
+			else
+			{
+				PyErr_SetString(PyExc_KeyError, ("unknown name in peer_class_info: " + key).c_str());
+				throw_error_already_set();
+			}
+		}
+
+		allow_threading_guard guard;
+		ses.set_peer_class(pc, pci);
+	}
+
 #ifndef TORRENT_DISABLE_DHT
     void dht_get_mutable_item(lt::session& ses, std::string key, std::string salt)
     {
@@ -647,7 +714,7 @@ namespace
                          , salt);
     }
 #endif
-} // namespace unnamed
+} // anonymous namespace
 
 
 void bind_session()
@@ -798,7 +865,25 @@ void bind_session()
 #endif
     ;
 
-    class_<lt::session, boost::noncopyable>("session", no_init)
+    class_<lt::peer_class_type_filter>("peer_class_type_filter")
+        .def(init<>())
+        .def("add", &lt::peer_class_type_filter::add)
+        .def("remove", &lt::peer_class_type_filter::remove)
+        .def("disallow", &lt::peer_class_type_filter::disallow)
+        .def("allow", &lt::peer_class_type_filter::allow)
+        .def("apply", &lt::peer_class_type_filter::apply)
+        ;
+
+    enum_<lt::peer_class_type_filter::socket_type_t>("socket_type_t")
+        .value("tcp_socket", peer_class_type_filter::tcp_socket)
+        .value("utp_socket", peer_class_type_filter::utp_socket)
+        .value("ssl_tcp_socket", peer_class_type_filter::ssl_tcp_socket)
+        .value("ssl_utp_socket", peer_class_type_filter::ssl_utp_socket)
+        .value("i2p_socket", peer_class_type_filter::i2p_socket)
+        ;
+
+    {
+    scope ses = class_<lt::session, boost::noncopyable>("session", no_init)
         .def("__init__", boost::python::make_constructor(&make_session
                 , default_call_policies()
                 , (arg("settings")
@@ -815,6 +900,7 @@ void bind_session()
         .def("outgoing_ports", &outgoing_ports)
 #endif
         .def("post_torrent_updates", allow_threads(&lt::session::post_torrent_updates), arg("flags") = 0xffffffff)
+        .def("post_dht_stats", allow_threads(&lt::session::post_dht_stats))
         .def("post_session_stats", allow_threads(&lt::session::post_session_stats))
         .def("is_listening", allow_threads(&lt::session::is_listening))
         .def("listen_port", allow_threads(&lt::session::listen_port))
@@ -888,12 +974,18 @@ void bind_session()
         .def("pause", allow_threads(&lt::session::pause))
         .def("resume", allow_threads(&lt::session::resume))
         .def("is_paused", allow_threads(&lt::session::is_paused))
-        .def("id", allow_threads(&lt::session::id))
         .def("get_cache_info", &get_cache_info1, (arg("handle") = torrent_handle(), arg("flags") = 0))
         .def("add_port_mapping", allow_threads(&lt::session::add_port_mapping))
         .def("delete_port_mapping", allow_threads(&lt::session::delete_port_mapping))
+        .def("set_peer_class_filter", &lt::session::set_peer_class_filter)
+        .def("set_peer_class_type_filter", &lt::session::set_peer_class_type_filter)
+        .def("create_peer_class", &lt::session::create_peer_class)
+        .def("delete_peer_class", &lt::session::delete_peer_class)
+        .def("get_peer_class", &get_peer_class)
+        .def("set_peer_class", &set_peer_class)
 
 #ifndef TORRENT_NO_DEPRECATE
+        .def("id", allow_threads(&lt::session::id))
         .def(
             "listen_on", &listen_on
           , (arg("min"), "max", arg("interface") = (char const*)0, arg("flags") = 0)
@@ -942,6 +1034,11 @@ void bind_session()
 #endif // TORRENT_NO_DEPRECATE
         ;
 
+    ses.attr("global_peer_class_id") = int(session::global_peer_class_id);
+    ses.attr("tcp_peer_class_id") = int(session::tcp_peer_class_id);
+    ses.attr("local_peer_class_id") = int(session::local_peer_class_id);
+    }
+
     enum_<lt::session::protocol_type>("protocol_type")
         .value("udp", lt::session::udp)
         .value("tcp", lt::session::tcp)
@@ -951,8 +1048,8 @@ void bind_session()
         .value("save_settings", lt::session::save_settings)
         .value("save_dht_settings", lt::session::save_dht_settings)
         .value("save_dht_state", lt::session::save_dht_state)
-        .value("save_encryption_settings", lt::session:: save_encryption_settings)
 #ifndef TORRENT_NO_DEPRECATE
+        .value("save_encryption_settings", lt::session:: save_encryption_settings)
         .value("save_as_map", lt::session::save_as_map)
         .value("save_i2p_proxy", lt::session::save_i2p_proxy)
         .value("save_proxy", lt::session::save_proxy)

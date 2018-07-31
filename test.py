@@ -1,10 +1,10 @@
 import unittest
-import libtorrent
+import lib.libtorrent as libtorrent
 
 class TestBuild(unittest.TestCase):
 
     def test_build(self):
-        self.assertEqual(libtorrent.version, '1.1.5.0')
+        self.assertEqual(libtorrent.version, '1.1.9.0')
 
 
 if __name__ == '__main__':

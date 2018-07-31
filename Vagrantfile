@@ -16,10 +16,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
 
   # Forwarding zeronet ports
-  config.vm.network "forwarded_port", guest: 43110, host: 43110
+  config.vm.network "forwarded_port", guest: 43110, host: 43111
   config.vm.network "forwarded_port", guest: 15441, host: 15441
 
   config.vm.provider "virtualbox" do |vb|
@@ -31,6 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/home/ubuntu/ZeroNet-master/plugins/Torrent"
 
   # Install Zeronet and load all the requirements
-  config.vm.provision :shell, path: "provision.sh", privileged: false
+  # config.vm.provision :shell, path: "provision.sh", privileged: false
 
 end
