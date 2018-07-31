@@ -10,6 +10,8 @@
 #include <memory>
 #include "bytes.hpp"
 
+#include <boost/type_traits/is_polymorphic.hpp>
+
 using namespace boost::python;
 using namespace libtorrent;
 
@@ -232,7 +234,8 @@ void bind_alert()
 
     class_<torrent_alert, bases<alert>, noncopyable>(
         "torrent_alert", no_init)
-        .def_readonly("handle", &torrent_alert::handle)
+        .add_property("handle", make_getter(&torrent_alert::handle, by_value()))
+        .add_property("torrent_name", &torrent_alert::torrent_name)
         ;
 
     class_<tracker_alert, bases<torrent_alert>, noncopyable>(

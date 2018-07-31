@@ -1,5 +1,5 @@
 import logging
-import libtorrent
+import lib.libtorrent as libtorrent
 import time
 import base64
 import gevent
