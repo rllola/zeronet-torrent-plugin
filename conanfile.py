@@ -153,7 +153,7 @@ class LibtorrentPythonConan(ConanFile):
         # with position independent code
         if self.settings.compiler != "Visual Studio":
           self.options["Libtorrent"].fPIC=True
-          self.options["Boost"].fPIC=True
+          self.options["boost"].fPIC=True
           self.options["bzip2"].fPIC=True
 
     def build(self):
