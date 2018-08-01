@@ -15,5 +15,5 @@ sudo tar xvpfz master.tar.gz
 echo "===== INSTALL LIBTORRENT & LIBTORRENT PYTHON BINDINGS ====="
 conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 cd /home/ubuntu/ZeroNet-master/plugins/Torrent
-conan install --build boost .
+conan install --build=missing .
 conan build .
