@@ -157,6 +157,9 @@ elseif (UNIX)
 
   # Strip unnecessary sections of the binary on Linux/Mac OS
 if(APPLE)
+
+  message(STATUS MACOSX_RPATH)
+
   set_target_properties(libtorrent PROPERTIES MACOSX_RPATH ".")
   set_target_properties(libtorrent PROPERTIES LINK_FLAGS "-undefined dynamic_lookup ")
   if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
