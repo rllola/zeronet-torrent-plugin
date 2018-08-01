@@ -170,6 +170,8 @@ class LibtorrentPythonConan(ConanFile):
     def package(self):
         self.copy('*.py*')
         self.copy("*.so")
+        self.copy("*.dylib")
+
 
     def package_info(self):
         self.env_info.PYTHONPATH.append(self.package_folder)

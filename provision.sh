@@ -2,7 +2,7 @@
 
 echo "===== INSTALL DEPENDENCIES ====="
 sudo apt update
-sudo apt install -y python-pip msgpack-python python-gevent git cmake
+sudo apt install -y python-pip msgpack-python python-gevent cmake
 # apt install -y autoconf libtool build-essential libboost-all-dev libssl-dev
 # This line broke pip so lets not use it for now
 #pip install --upgrade pip

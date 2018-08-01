@@ -6,9 +6,9 @@ matrix:
         sudo: false
         addons:
           apt:
+            update: true
             sources:
               - george-edison55-precise-backports
-              - ubuntu-toolchain-r-test
             packages:
               - cmake
               - cmake-data
@@ -20,18 +20,13 @@ matrix:
               - python-minimal
               - python-msgpack
               - python-wheel
-              - g++-7
-          env:
-            - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
       - os: osx
 
 before_install:
-  - eval "${MATRIX_EVAL}"
-  - gcc -v
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
-  - conan install --build=missing -s compiler.version=7 .
+  - conan install --build=missing .
   - conan build .
 script:
   - python test.py
