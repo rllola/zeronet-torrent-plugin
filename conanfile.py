@@ -116,7 +116,7 @@ def GetGlobalPythonPrefix():
 def GetPossiblePythonLibraryDirectories():
   prefix = GetGlobalPythonPrefix()
 
-  if OnWindows:
+  if OnWindows():
     return [ p.join( prefix, 'libs' ) ]
   # On pyenv and some distributions, there is no Python dynamic library in the
   # directory returned by the LIBPL variable. Such library can be found in the
@@ -162,6 +162,7 @@ class LibtorrentPythonConan(ConanFile):
         library_dirs, include_dir = FindPythonLibraries()
         print "We got it"
         pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
+        #pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
         print pythonpaths
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
