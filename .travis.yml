@@ -1,4 +1,4 @@
-language: cpp
+language: generix
 matrix:
     include:
       - os: linux
@@ -27,6 +27,7 @@ matrix:
       - os: osx
 
 before_install:
+  - export "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
