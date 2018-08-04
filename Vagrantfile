@@ -31,6 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/home/ubuntu/ZeroNet-master/plugins/Torrent"
 
   # Install Zeronet and load all the requirements
-  #config.vm.provision :shell, path: "provision.sh", privileged: false
+  config.vm.provision :shell, path: "provision.sh", privileged: false
 
 end

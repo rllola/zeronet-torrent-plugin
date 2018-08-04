@@ -12,6 +12,10 @@ matrix:
             packages:
               - cmake
               - cmake-data
+              - build-essential
+              - autotools-dev
+              - libicu-dev
+              - libbz2-dev
               - libboost-all-dev
               - python-dev
               - python-all
