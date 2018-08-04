@@ -28,7 +28,7 @@ matrix:
       - os: osx
 
 before_install:
-  - apt installed --list
+  - apt list --installed
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
