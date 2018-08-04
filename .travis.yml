@@ -1,4 +1,4 @@
-language: minimal
+language: cpp
 matrix:
     include:
       - os: linux
@@ -31,7 +31,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
-  - conan install --build=missing .
+  - conan install --build=missing -s compiler.version=7 .
   - conan build .
 script:
   - python test.py
