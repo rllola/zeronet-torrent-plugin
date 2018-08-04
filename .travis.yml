@@ -17,7 +17,6 @@ matrix:
               - libicu-dev
               - libbz2-dev
               - libboost-all-dev
-              - libboost1.55-tools-dev
               - python-dev
               - python-all
               - python-all-dev
@@ -29,6 +28,7 @@ matrix:
       - os: osx
 
 before_install:
+  - apt installed --list
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
