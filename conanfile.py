@@ -143,7 +143,7 @@ class LibtorrentPythonConan(ConanFile):
         self.info.settings.clear()
 
     def configure(self):
-        self.options["Libtorrent"].shared=True
+        self.options["Libtorrent"].shared=False
         self.options["boost"].shared=True
         self.options["boost"].without_python=False
         self.options["boost"].without_atomic=True
