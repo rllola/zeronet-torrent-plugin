@@ -21,9 +21,9 @@ matrix:
               - python-minimal
               - python-msgpack
               - python-wheel
-              - g++-7
+              - g++-6
           env:
-            - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+            - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
       - os: osx
 
 before_install:
@@ -31,7 +31,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then  conan install --build=missing .; else conan install --build=missing -s compiler.version=7 .; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then  conan install --build=missing .; else conan install --build=missing -s compiler.version=6 .; fi
   - conan build .
 script:
   - python test.py
