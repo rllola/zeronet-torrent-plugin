@@ -12,6 +12,7 @@ matrix:
             packages:
               - cmake
               - cmake-data
+              - libboost-all-dev
               - python-dev
               - python-all
               - python-all-dev
