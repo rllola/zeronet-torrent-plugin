@@ -17,8 +17,7 @@ matrix:
               - libicu-dev
               - libbz2-dev
               - libboost-all-dev
-              - openmpi-dev
-              - boost-build
+              - libboost1.55-tools-dev
               - python-dev
               - python-all
               - python-all-dev
