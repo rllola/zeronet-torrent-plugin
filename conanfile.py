@@ -149,7 +149,6 @@ class LibtorrentPythonConan(ConanFile):
         self.options["boost"].without_atomic=True
         self.options["boost"].without_container=True
         self.options["boost"].without_context=True
-        self.options["boost"].without_contract=True
         self.options["boost"].without_coroutine=True
         self.options["boost"].without_date_time=True
         self.options["boost"].without_exception=True

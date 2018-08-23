@@ -5,7 +5,7 @@ sudo apt update
 sudo apt install -y python-pip msgpack-python python-gevent libboost-all-dev git
 # apt install -y autoconf libtool build-essential libboost-all-dev libssl-dev
 # This line broke pip so lets not use it for now
-#pip install --upgrade pip
+#pip install --upgrade --user pip
 sudo pip install conan
 
 echo "===== UPDATE CMAKE (for trusty) ====="

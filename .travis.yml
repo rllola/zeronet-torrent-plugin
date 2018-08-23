@@ -3,7 +3,7 @@ matrix:
     include:
       - os: linux
         dist: trusty
-        sudo: false
+        sudo: true
         addons:
           apt:
             update: true
@@ -29,7 +29,7 @@ matrix:
 before_install:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
-  - pip install urllib3[secure]
+  - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing .
