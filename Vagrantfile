@@ -5,7 +5,7 @@
 #                                                                             #
 # Vagrantfile project: Torrent plugin                                         #
 # Description:                                                                #
-# Will start a ubuntu 16.04 box with Zeronet install and the torrent ready    #
+# Will start a ubuntu 18.04 box with Zeronet install and the torrent ready    #
 # for use.                                                                    #
 # Author: Lola                                                                #
 #                                                                             #

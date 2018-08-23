@@ -28,8 +28,8 @@ matrix:
 
 before_install:
   - eval "${MATRIX_EVAL}"
-  - pip install requests[security]
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
+  - pip install conan_package_tools
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing .
