@@ -143,35 +143,7 @@ class LibtorrentPythonConan(ConanFile):
         self.info.settings.clear()
 
     def configure(self):
-        self.options["Libtorrent"].shared=False
-        self.options["boost"].shared=True
-        self.options["boost"].without_python=False
-        self.options["boost"].without_atomic=True
-        self.options["boost"].without_container=True
-        self.options["boost"].without_context=True
-        self.options["boost"].without_contract=True
-        self.options["boost"].without_coroutine=True
-        self.options["boost"].without_date_time=True
-        self.options["boost"].without_exception=True
-        self.options["boost"].without_fiber=True
-        self.options["boost"].without_filesystem=True
-        self.options["boost"].without_graph=True
-        self.options["boost"].without_graph_parallel=True
-        self.options["boost"].without_iostreams=True
-        self.options["boost"].without_locale=True
-        self.options["boost"].without_log=True
-        self.options["boost"].without_math=True
-        self.options["boost"].without_mpi=True
-        self.options["boost"].without_program_options=True
-        self.options["boost"].without_regex=True
-        self.options["boost"].without_serialization=True
-        self.options["boost"].without_signals=True
-        self.options["boost"].without_stacktrace=True
-        self.options["boost"].without_test=True
-        self.options["boost"].without_thread=True
-        self.options["boost"].without_timer=True
-        self.options["boost"].without_type_erasure=True
-        self.options["boost"].without_wave=True
+        self.options["Libtorrent"].shared=True
         self.options["zlib"].shared=False
         self.options["bzip2"].shared=False
         self.options["OpenSSL"].shared=False
@@ -187,8 +159,8 @@ class LibtorrentPythonConan(ConanFile):
         print "Looking for Python libraries"
         library_dirs, include_dir = FindPythonLibraries()
         print "We got it"
-        pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
-        #pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
+        #pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
+        pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
         print pythonpaths
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
