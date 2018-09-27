@@ -142,6 +142,11 @@ class LibtorrentPythonConan(ConanFile):
     def conan_info(self):
         self.info.settings.clear()
 
+    def imports(self):
+       self.copy("*.dll", "", "bin")
+       self.copy("*.dylib", "", "lib")
+       self.copy("*.so", "", "lib")
+
     def configure(self):
         self.options["Libtorrent"].shared=True
         self.options["zlib"].shared=False
