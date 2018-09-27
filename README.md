@@ -19,14 +19,15 @@ git clone https://github.com/rllola/zeronet-torrent-plugin.git Torrent
 You need to have conan installed : https://www.conan.io/downloads
 
 ```
-conan install --build=missing
-conan build
+conan install --build=missing .
+conan build .
 python test.py
 ```
 
 It might take a couple of minutes.
 
-Test here : http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
+If the test work, you can start Zeronet and access the test page :
+http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
 
 ## Troubleshooting
 
@@ -34,10 +35,6 @@ Test here : http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
 
 This plugin does not work with the default setup in ZeroBundle (currently) as ZeroBundle packages its own python binary (which won't have access to libtorrent).
 
-To work around this, instead of double-clicking the ZeroNet icon, navigate to `WhereverYouDownloadedZeroNet/ZeroNet.app/Contents/Resources/core`, and launch ZeroNet from there with:
+### Windows
 
-```
-python ./zeronet.py
-```
-
-The test page should now no longer report that the plugin is not installed.
+It has not been yet tested on Windows.
