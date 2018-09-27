@@ -33,7 +33,7 @@ before_install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
   - conan install --build=missing .
-  - locate libtorrent-rasterbar.dylib
+  - find ~ -iname "libtorrent-rasterbar.dylib"
   - conan build .
 script:
   - python test.py
