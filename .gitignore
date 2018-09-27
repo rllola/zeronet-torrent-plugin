@@ -1,6 +1,7 @@
 *.pyc
 .vagrant/
 *.log
+*.so
 libtorrent-conan/conanbuildinfo.cmake
 libtorrent-conan/conanbuildinfo.txt
 libtorrent-conan/conaninfo.txt

@@ -4,7 +4,7 @@ project(libtorrent-python)
 
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+conan_basic_setup(KEEP_RPATHS)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
@@ -157,14 +157,17 @@ elseif (UNIX)
 
   # Strip unnecessary sections of the binary on Linux/Mac OS
 if(APPLE)
-  set_target_properties(pypoco PROPERTIES MACOSX_RPATH ".")
-  set_target_properties(pypoco PROPERTIES LINK_FLAGS "-undefined dynamic_lookup ")
+
+  message(STATUS MACOSX_RPATH)
+
+  set_target_properties(libtorrent PROPERTIES MACOSX_RPATH ".")
+  set_target_properties(libtorrent PROPERTIES LINK_FLAGS "-undefined dynamic_lookup ")
   if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-    add_custom_command(TARGET pypoco POST_BUILD COMMAND strip -u -r ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
+    add_custom_command(TARGET libtorrent POST_BUILD COMMAND strip -u -r ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
   endif()
 else()
   if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-    add_custom_command(TARGET pypoco POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
+    add_custom_command(TARGET libtorrent POST_BUILD COMMAND strip ${PROJECT_BINARY_DIR}/lib/libtorrent.so)
   endif()
 endif()
 endif()

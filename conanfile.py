@@ -116,7 +116,7 @@ def GetGlobalPythonPrefix():
 def GetPossiblePythonLibraryDirectories():
   prefix = GetGlobalPythonPrefix()
 
-  if OnWindows:
+  if OnWindows():
     return [ p.join( prefix, 'libs' ) ]
   # On pyenv and some distributions, there is no Python dynamic library in the
   # directory returned by the LIBPL variable. Such library can be found in the
@@ -142,10 +142,13 @@ class LibtorrentPythonConan(ConanFile):
     def conan_info(self):
         self.info.settings.clear()
 
+    def imports(self):
+        self.copy("*.dll", "", "bin")
+        self.copy("*.dylib", "", "lib")
+#        self.copy("*.so", "", "lib")
+
     def configure(self):
         self.options["Libtorrent"].shared=True
-        self.options["boost"].shared=True
-        self.options["boost"].without_python=False
         self.options["zlib"].shared=False
         self.options["bzip2"].shared=False
         self.options["OpenSSL"].shared=False
@@ -153,13 +156,13 @@ class LibtorrentPythonConan(ConanFile):
         # with position independent code
         if self.settings.compiler != "Visual Studio":
           self.options["Libtorrent"].fPIC=True
-          self.options["Boost"].fPIC=True
+          self.options["boost"].fPIC=True
           self.options["bzip2"].fPIC=True
 
     def build(self):
         cmake = CMake(self)
         print "Looking for Python libraries"
-        #library_dirs, include_dir = FindPythonLibraries()
+        library_dirs, include_dir = FindPythonLibraries()
         print "We got it"
         #pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
         pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
@@ -170,6 +173,8 @@ class LibtorrentPythonConan(ConanFile):
     def package(self):
         self.copy('*.py*')
         self.copy("*.so")
+        self.copy("*.dylib")
+
 
     def package_info(self):
         self.env_info.PYTHONPATH.append(self.package_folder)
