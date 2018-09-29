@@ -6,6 +6,7 @@ init:
   - python -m pip install conan
 
 install:
+  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - conan install --build=missing .
   - conan build .
 
