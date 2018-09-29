@@ -3,7 +3,7 @@ platform:
 
 init:
   - python -m pip install --upgrade pip
-  - python -m pip install conan
+  - python -m pip install conan numpy
 
 install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
