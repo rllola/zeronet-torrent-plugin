@@ -1,6 +1,10 @@
 platform:
   - x64
 
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27-x64"
+
 init:
   - python -m pip install --upgrade pip
   - python -m pip install conan numpy
