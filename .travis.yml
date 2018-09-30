@@ -47,7 +47,7 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: $GH_TOKEN
-  draft: true
+  prerelease: true
   overwrite: true
   file:
     - build-$TRAVIS_OS_NAME.zip
