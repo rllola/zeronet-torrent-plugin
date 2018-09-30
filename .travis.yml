@@ -45,8 +45,9 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: $GH_TOKEN
-  file_glob: true
   prerelease: true
+  overwrite: true
+  name: "Zeronet Torrent plugin release"
   file:
     - build-$TRAVIS_OS_NAME.zip
   on:
