@@ -148,7 +148,8 @@ class LibtorrentPythonConan(ConanFile):
 #        self.copy("*.so", "", "lib")
 
     def configure(self):
-        self.options["Libtorrent"].shared=True
+        self.options["Libtorrent"].shared=False
+        self.options["boost"].shared=False
         self.options["zlib"].shared=False
         self.options["bzip2"].shared=False
         self.options["OpenSSL"].shared=False
