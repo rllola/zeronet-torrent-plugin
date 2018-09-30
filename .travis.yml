@@ -38,7 +38,7 @@ script:
   - python test.py
 
 before_deploy:
-  - zip build-{$TRAVIS_OS_NAME}.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - zip build.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
 
 deploy:
   provider: releases
@@ -48,7 +48,7 @@ deploy:
   file_glob: true
   draft: true
   file:
-    - build-{$TRAVIS_OS_NAME}.zip
+    - build.zip
   on:
     branch:
       - master
