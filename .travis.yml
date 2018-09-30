@@ -37,6 +37,9 @@ install:
 script:
   - python test.py
 
+before_deploy:
+  - zip build-{$TRAVIS_OS_NAME}.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+
 deploy:
   provider: releases
   skip_cleanup: true
@@ -44,14 +47,4 @@ deploy:
     secure: $GH_TOKEN
   file_glob: true
   file:
-    - lib/__init__.py
-    - lib/libtorrent.so
-    - src/*
-    - __init__.py
-    - AlertEncoder.py
-    - test.py
-    - TorrentPlugin.py
-  branches:
-    only:
-      - master
-      - pblish-release
+    - build-{$TRAVIS_OS_NAME}.zip
