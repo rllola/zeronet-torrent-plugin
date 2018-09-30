@@ -36,3 +36,22 @@ install:
   - conan build .
 script:
   - python test.py
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: $GH_TOKEN
+  file_glob: true
+  file:
+    - lib/__init__.py
+    - lib/libtorrent.so
+    - src/*
+    - __init__.py
+    - AlertEncoder.py
+    - test.py
+    - TorrentPlugin.py
+  branches:
+    only:
+      - master
+      - pblish-release
