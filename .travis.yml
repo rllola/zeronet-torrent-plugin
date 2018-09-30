@@ -41,13 +41,13 @@ before_deploy:
   - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - git config --local user.name "rllola"
   - git config --local user.email "rllola80@gmail.com"
-  - git tag "0.1.0"
+  - git tag "zeronet-torrent-plugin-0.1.0"
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: $GH_TOKEN
-  prerelease: true
+  draft: true
   overwrite: true
   file:
     - build-$TRAVIS_OS_NAME.zip
