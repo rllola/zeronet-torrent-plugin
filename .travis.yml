@@ -46,5 +46,6 @@ deploy:
   api_key:
     secure: $GH_TOKEN
   file_glob: true
+  draft: true
   file:
     - build-{$TRAVIS_OS_NAME}.zip
