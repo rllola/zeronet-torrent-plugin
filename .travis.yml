@@ -49,3 +49,7 @@ deploy:
   draft: true
   file:
     - build-{$TRAVIS_OS_NAME}.zip
+  on:
+    branch:
+      - master
+      - pblish-release
