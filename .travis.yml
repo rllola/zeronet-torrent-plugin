@@ -42,15 +42,9 @@ before_deploy:
 deploy:
   provider: releases
   skip_cleanup: true
-  tag_name: zeronet-torrent-plugin-0.1.0
   api_key:
     secure: $GH_TOKEN
-  draft: true
-  overwrite: true
   file:
     - build-$TRAVIS_OS_NAME.zip
   on:
-    tags: false
-    branch:
-      - master
-      - pblish-release
+    tags: true
