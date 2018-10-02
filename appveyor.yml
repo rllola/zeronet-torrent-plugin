@@ -6,8 +6,8 @@ environment:
     - PYTHON: "C:\\Python27-x64"
 
 init:
-  - python -m pip install --upgrade pip
-  - python -m pip install conan numpy
+  - "%PYTHON%\\python.exe -m pip install --upgrade pip"
+  - "%PYTHON%\\python.exe -m pip install conan numpy"
 
 install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
@@ -15,4 +15,4 @@ install:
   - conan build .
 
 test_script:
-  - python test.py
+  - "%PYTHON%\\python.exe test.py"
