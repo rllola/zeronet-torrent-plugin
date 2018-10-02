@@ -36,3 +36,15 @@ install:
   - conan build .
 script:
   - python test.py
+
+before_deploy:
+  - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: $GH_TOKEN
+  file:
+    - build-$TRAVIS_OS_NAME.zip
+  on:
+    tags: true
