@@ -7,8 +7,8 @@ environment:
 
 init:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - "python -m pip install --upgrade pip"
-  - "python -m pip install conan numpy"
+  - python -m pip install --upgrade pip
+  - python -m pip install conan numpy
 
 install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
@@ -16,4 +16,4 @@ install:
   - conan build .
 
 test_script:
-  - "python test.py"
+  - python test.py
