@@ -13,6 +13,7 @@ init:
 install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - conan install --build=missing .
+  - dir
   - conan build .
 
 test_script:
