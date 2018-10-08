@@ -5,6 +5,8 @@ environment:
   matrix:
     - PYTHON: "C:\\Python27-x64"
 
+build: off
+
 init:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - python -m pip install --upgrade pip
