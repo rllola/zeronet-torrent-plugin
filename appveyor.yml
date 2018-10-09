@@ -4,7 +4,7 @@ platform:
 environment:
   matrix:
     - PYTHON: "C:\\Python27-x64"
-
+    
 build: off
 
 init:
@@ -28,7 +28,7 @@ before_deploy:
 deploy:
   provider: GitHub
   auth_token:
-    secure: $(GITHUB_TOKEN) # your encrypted token from GitHub
+    secure: 6eX2olaIxe4TsfETod+SYOyDsIKwmDivjirb7RPvl/Zd4zYW3dzGr4MieJ2BP89P # your encrypted token from GitHub
   artifact: build-windows.zip         # upload all NuGet packages to release assets
   prerelease: true
   on:
