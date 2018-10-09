@@ -30,7 +30,8 @@ deploy:
   auth_token:
     secure: 6eX2olaIxe4TsfETod+SYOyDsIKwmDivjirb7RPvl/Zd4zYW3dzGr4MieJ2BP89P # your encrypted token from GitHub
   artifacts:
-    path: build-windows.zip
+    - path: build-windows.zip
+      name: build-windows
   prerelease: true
   force_update: true
   on:
