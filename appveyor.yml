@@ -24,7 +24,8 @@ test_script:
 
 before_deploy:
   - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
-
+  - dir
+  
 deploy:
   provider: GitHub
   auth_token:
