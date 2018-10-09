@@ -5,6 +5,9 @@ environment:
   matrix:
     - PYTHON: "C:\\Python27-x64"
 
+artifacts:
+  - path: build-windows.zip
+
 build: off
 
 init:
@@ -25,12 +28,12 @@ test_script:
 before_deploy:
   - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
-  
+
 deploy:
   provider: GitHub
   auth_token:
     secure: 6eX2olaIxe4TsfETod+SYOyDsIKwmDivjirb7RPvl/Zd4zYW3dzGr4MieJ2BP89P # your encrypted token from GitHub
-  artifact: build-windows.zip         # upload all NuGet packages to release assets
+  artifact: build-windows.zip
   prerelease: true
   force_update: true
   on:
