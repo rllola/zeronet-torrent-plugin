@@ -18,14 +18,13 @@ init:
 install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - conan install --build=missing .
-  - dir
   - conan build .
   - mv libtorrent.pyd lib/libtorrent.pyd
 
 test_script:
   - python test.py
 
-before_deploy:
+after_test:
   - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
 
