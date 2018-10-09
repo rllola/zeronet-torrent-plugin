@@ -21,3 +21,15 @@ install:
 
 test_script:
   - python test.py
+
+before_deploy:
+  - zip build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: $(GITHUB_TOKEN) # your encrypted token from GitHub
+  artifact: build-windows.zip         # upload all NuGet packages to release assets
+  prerelease: true
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
