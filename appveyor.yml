@@ -1,0 +1,23 @@
+platform:
+  - x64
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27-x64"
+
+build: off
+
+init:
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - python -m pip install --upgrade pip
+  - python -m pip install conan numpy
+
+install:
+  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
+  - conan install --build=missing .
+  - dir
+  - conan build .
+  - mv libtorrent.pyd lib/libtorrent.pyd
+
+test_script:
+  - python test.py
