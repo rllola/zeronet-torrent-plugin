@@ -17,6 +17,7 @@ install:
   - conan install --build=missing .
   - dir
   - conan build .
+  - mv libtorrent.pyd lib/libtorrent.pyd
 
 test_script:
   - python test.py
