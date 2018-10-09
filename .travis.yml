@@ -25,10 +25,11 @@ matrix:
           env:
             - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
       - os: osx
+        sudo: false
 
 before_install:
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install --user conan; else pip install --user conan; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pip install conan; else pip install --user conan; fi
   - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 install:
