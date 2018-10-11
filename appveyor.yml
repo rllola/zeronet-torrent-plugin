@@ -1,12 +1,13 @@
 platform:
   - x64
+  - Win32
 
 environment:
   matrix:
     - PYTHON: "C:\\Python27-x64"
 
 artifacts:
-  - path: build-windows.zip
+  - path: build-windows-$(PLATFORM).zip
 
 build: off
 
@@ -25,14 +26,14 @@ test_script:
   - python test.py
 
 after_test:
-  - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - 7z a build-windows-$(PLATFORM).zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
 
 deploy:
   provider: GitHub
   auth_token:
     secure: 6eX2olaIxe4TsfETod+SYOyDsIKwmDivjirb7RPvl/Zd4zYW3dzGr4MieJ2BP89P # your encrypted token from GitHub
-  artifact: build-windows.zip
+  artifact: build-windows-$(PLATFORM).zip
   prerelease: true
   force_update: true
   on:
