@@ -1,11 +1,5 @@
 platform:
-  - x64
   - Win32
-
-environment:
-  matrix:
-    - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python27"
 
 artifacts:
   - path: build-windows-$(PLATFORM).zip
