@@ -19,6 +19,7 @@ git clone https://github.com/rllola/zeronet-torrent-plugin.git Torrent
 You need to have conan installed : https://www.conan.io/downloads
 
 ```
+conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
 conan install --build=missing .
 conan build .
 python test.py
