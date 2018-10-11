@@ -1,5 +1,11 @@
 platform:
+  - x64
   - Win32
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python27"
 
 artifacts:
   - path: build-windows-$(PLATFORM).zip
@@ -21,7 +27,7 @@ test_script:
   - python test.py
 
 after_test:
-  - 7z a build-windows-$(PLATFORM).zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - 7z a build-windows-%PLATFORM%.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
 
 deploy:
