@@ -130,8 +130,8 @@ def GetPossiblePythonLibraryDirectories():
 
 class LibtorrentPythonConan(ConanFile):
     name = "LibtorrentPython"
-    version = "1.1.8"
-    requires = "Libtorrent/1.1.8@lola/stable",
+    version = "1.1.10"
+    requires = "Libtorrent/1.1.10@lola/stable",
     settings = "os", "compiler", "arch", "build_type"
     options = {"python_version": ["2.7"]}
     default_options = "python_version=2.7"
