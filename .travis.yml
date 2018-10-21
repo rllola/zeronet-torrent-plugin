@@ -4,17 +4,6 @@ matrix:
       - os: linux
         dist: trusty
         sudo: true
-        before_install:
-          - sudo apt purge cmake
-          - wget https://cmake.org/files/v3.12/cmake-3.12.1-Linux-x86_64.tar.gz
-          - tar -xvf cmake-3.12.1-Linux-x86_64.tar.gz
-          - cd cmake-3.12.1-Linux-x86_64
-          - sudo cp -r bin /usr/
-          - sudo cp -r share /usr/
-          - sudo cp -r doc /usr/share/
-          - sudo cp -r man /usr/share/
-          - cd ..
-          - sudo rm -r cmake-3.12.1-Linux-x86_64
         addons:
           apt:
             update: true
@@ -22,6 +11,8 @@ matrix:
               - george-edison55-precise-backports
               - ubuntu-toolchain-r-test
             packages:
+              - cmake
+              - cmake-data
               - python-dev
               - python-all
               - python-all-dev
