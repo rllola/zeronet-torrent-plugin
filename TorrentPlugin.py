@@ -41,12 +41,15 @@ class UiWebsocketPlugin(object):
             try:
                 # Test if a magnet
                 params = libtorrent.parse_magnet_uri(torrentIdentifier)
+                print params
                 params['save_path'] = save_path
+                print params['info_hash']
                 # HACK:
                 # Doesn't recognise sha1_hash python object when addded to session if not converted to string
                 # 'No registered converter was able to produce a C++ rvalue of type bytes from this Python object of type sha1_hash'
-                params['info_hash'] = params['info_hash'].to_string()
-            except:
+                #params['info_hash'] = params['info_hash'].to_string()
+            except Exception as exception:
+                print exception
                 params = { 'save_path': save_path, \
                             'storage_mode': libtorrent.storage_mode_t.storage_mode_sparse, \
                             'info_hash': torrentIdentifier.decode('hex') }
