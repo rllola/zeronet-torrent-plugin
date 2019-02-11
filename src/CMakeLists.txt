@@ -91,7 +91,6 @@ endif()
 # Create the binding library
 add_library(libtorrent SHARED
   module.cpp
-  big_number.cpp
   converters.cpp
   create_torrent.cpp
   fingerprint.cpp
@@ -110,6 +109,7 @@ add_library(libtorrent SHARED
   ip_filter.cpp
   magnet_uri.cpp
   error_code.cpp
+  sha1_hash.cpp
 )
 
 target_link_libraries(libtorrent ${CONAN_LIBS})
