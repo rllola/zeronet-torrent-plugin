@@ -23,16 +23,9 @@ matrix:
         env:
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         before_install:
+          - sudo apt remove cmake
           - sudo apt purge cmake
-          - wget https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.tar.gz
-          - tar -xvf cmake-3.12.4-Linux-x86_64.tar.gz
-          - cd cmake-3.12.4-Linux-x86_64
-          - sudo cp -r bin /usr/
-          - sudo cp -r share /usr/
-          - sudo cp -r doc /usr/share/
-          - sudo cp -r man /usr/share/
-          - cd ..
-          - sudo rm -r cmake-3.12.4-Linux-x86_64
+          - wget -O https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.sh | bash
           - cmake --version
       - os: osx
         sudo: true
