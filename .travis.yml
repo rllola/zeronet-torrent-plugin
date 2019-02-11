@@ -37,7 +37,7 @@ matrix:
       - os: osx
         sudo: true
         before_install:
-          - brew install cmake
+          - brew upgrade cmake
 
 install:
   - eval "${MATRIX_EVAL}"
