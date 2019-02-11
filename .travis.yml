@@ -25,7 +25,7 @@ matrix:
         before_install:
           - sudo apt remove cmake
           - sudo apt purge cmake
-          - wget -O https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.sh | bash
+          - wget -O - https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.sh | bash
           - cmake --version
       - os: osx
         sudo: true
