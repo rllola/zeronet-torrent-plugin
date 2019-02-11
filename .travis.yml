@@ -8,11 +8,8 @@ matrix:
           apt:
             update: true
             sources:
-              - george-edison55-precise-backports
               - ubuntu-toolchain-r-test
             packages:
-              - cmake
-              - cmake-data
               - python-dev
               - python-all
               - python-all-dev
@@ -25,15 +22,23 @@ matrix:
               - gcc-7
         env:
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        before_install:
+          - sudo apt purge cmake
+          - wget https://cmake.org/files/v3.12/cmake-3.12.1-Linux-x86_64.tar.gz
+          - tar -xvf cmake-3.12.1-Linux-x86_64.tar.gz
+          - cd cmake-3.12.1-Linux-x86_64
+          - sudo cp -r bin /usr/
+          - sudo cp -r share /usr/
+          - sudo cp -r doc /usr/share/
+          - sudo cp -r man /usr/share/
       - os: osx
         sudo: true
 
-before_install:
+install:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install conan; else pip install --user conan; fi
   - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-install:
   - conan install --build=missing .
   - conan build .
 script:
