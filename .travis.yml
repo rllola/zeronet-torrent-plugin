@@ -35,6 +35,8 @@ matrix:
           - sudo rm -r cmake-3.12.1-Linux-x86_64
       - os: osx
         sudo: true
+        before_install:
+          - brew install cmake
 
 install:
   - eval "${MATRIX_EVAL}"
