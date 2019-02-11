@@ -36,9 +36,9 @@ install:
   - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - ls /home/travis/.conan
-  #- cat /home/travis/.conan/profiles/default
   - conan install --build=missing -s compiler.version=7 .
-  - conan build -s compiler.version=7 .
+  - cat /home/travis/.conan/profiles/default
+  - conan build -s compiler=gcc -s compiler.version=7 .
 script:
   - python test.py
 
