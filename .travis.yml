@@ -31,6 +31,8 @@ matrix:
           - sudo cp -r share /usr/
           - sudo cp -r doc /usr/share/
           - sudo cp -r man /usr/share/
+          - cd ..
+          - sudo rm -r cmake-3.12.1-Linux-x86_64
       - os: osx
         sudo: true
 
