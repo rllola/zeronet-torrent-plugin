@@ -39,7 +39,7 @@ install:
   - ls /home/travis/.conan
   - conan install --build=missing -s compiler.version=7 .
   - cat /home/travis/.conan/profiles/default
-  - conan build -s compiler='gcc' -s compiler.version=7 .
+  - conan build .
 script:
   - python test.py
 
