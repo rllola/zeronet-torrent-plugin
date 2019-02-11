@@ -8,8 +8,10 @@ matrix:
           apt:
             update: true
             sources:
+              - george-edison55-precise-backports
               - ubuntu-toolchain-r-test
             packages:
+              - cmake-data
               - python-dev
               - python-all
               - python-all-dev
