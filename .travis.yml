@@ -1,8 +1,8 @@
-language: cpp
-compiler: gcc
 matrix:
     include:
       - os: linux
+        language: cpp
+        compiler: gcc
         dist: xenial
         sudo: true
         addons:
@@ -33,7 +33,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install conan; else pip install --user conan; fi
   - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-  - conan install --build=missing -s compiler.version=7 .
+  - conan install --build=missing .
   - conan build .
 script:
   - python test.py
