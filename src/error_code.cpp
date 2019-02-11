@@ -30,23 +30,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#include "boost_python.hpp"
 #include <libtorrent/error_code.hpp>
 #include <libtorrent/bdecode.hpp>
 #include <libtorrent/upnp.hpp>
 #include <libtorrent/socks5_stream.hpp>
-
-namespace boost
-{
-	// this fixe mysterious link error on msvc
-	template <>
-	inline boost::system::error_category const volatile*
-	get_pointer(class boost::system::error_category const volatile* p)
-	{
-		return p;
-	}
-}
-
 #include <boost/asio/error.hpp>
 #if defined TORRENT_USE_OPENSSL
 #include <boost/asio/ssl.hpp>
@@ -54,9 +41,10 @@ namespace boost
 #if TORRENT_USE_I2P
 #include <libtorrent/i2p_stream.hpp>
 #endif
+#include "boost_python.hpp"
 
 using namespace boost::python;
-using namespace lt;
+using namespace libtorrent;
 using boost::system::error_category;
 
 namespace {
@@ -64,7 +52,7 @@ namespace {
 	struct ec_pickle_suite : boost::python::pickle_suite
 	{
 		static boost::python::tuple
-		getinitargs(error_code const&)
+		getinitargs(error_code const& ec)
 		{
 			return boost::python::tuple();
 		}
@@ -90,17 +78,17 @@ namespace {
 			int const value = extract<int>(state[0]);
 			std::string const category = extract<std::string>(state[1]);
 			if (category == "system")
-				ec.assign(value, lt::system_category());
+				ec.assign(value, libtorrent::system_category());
 			else if (category == "generic")
-				ec.assign(value, lt::generic_category());
+				ec.assign(value, libtorrent::generic_category());
 			else if (category == "libtorrent")
-				ec.assign(value, lt::libtorrent_category());
+				ec.assign(value, libtorrent::libtorrent_category());
 			else if (category == "http error")
-				ec.assign(value, lt::http_category());
+				ec.assign(value, libtorrent::http_category());
 			else if (category == "UPnP error")
-				ec.assign(value, lt::upnp_category());
+				ec.assign(value, libtorrent::upnp_category());
 			else if (category == "bdecode error")
-				ec.assign(value, lt::bdecode_category());
+				ec.assign(value, libtorrent::bdecode_category());
 			else if (category == "asio.netdb")
 				ec.assign(value, boost::asio::error::get_netdb_category());
 			else if (category == "asio.addinfo")
@@ -145,14 +133,14 @@ private:
 	boost::system::error_category const* m_cat;
 };
 
-void error_code_assign(boost::system::error_code& me, int const v, category_holder const cat)
+void error_code_assign(boost::system::error_code& self, int const v, category_holder const cat)
 {
-	me.assign(v, cat.ref());
+	self.assign(v, cat.ref());
 }
 
-category_holder error_code_category(boost::system::error_code const& me)
+category_holder error_code_category(boost::system::error_code const& self)
 {
-	return category_holder(me.category());
+	return category_holder(self.category());
 }
 
 #define WRAP_CAT(name) \
@@ -201,7 +189,7 @@ void bind_error_code()
     def("i2p_category", &wrap_i2p_category);
 #endif
 
-#if TORRENT_ABI_VERSION == 1
+#ifndef TORRENT_NO_DEPRECATE
     def("get_libtorrent_category", &wrap_libtorrent_category);
     def("get_upnp_category", &wrap_upnp_category);
     def("get_http_category", &wrap_http_category);
@@ -210,7 +198,7 @@ void bind_error_code()
 #if TORRENT_USE_I2P
     def("get_i2p_category", &wrap_i2p_category);
 #endif
-#endif // TORRENT_ABI_VERSION
+#endif // TORRENT_NO_DEPRECATE
 
     def("generic_category", &wrap_generic_category);
 

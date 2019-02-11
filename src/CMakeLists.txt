@@ -109,7 +109,7 @@ add_library(libtorrent SHARED
   ip_filter.cpp
   magnet_uri.cpp
   error_code.cpp
-  sha1_hash.cpp
+  big_number.cpp
 )
 
 target_link_libraries(libtorrent ${CONAN_LIBS})
