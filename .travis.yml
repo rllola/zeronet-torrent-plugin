@@ -24,6 +24,7 @@ matrix:
         env:
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
       - os: osx
+        language: generic
         sudo: true
         before_install:
           - brew upgrade cmake
