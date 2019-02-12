@@ -1,9 +1,9 @@
 platform:
-  - x86
+  - x64
 
 environment:
   matrix:
-    #- PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python27"
 
 artifacts:
