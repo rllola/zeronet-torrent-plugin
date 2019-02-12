@@ -1,18 +1,16 @@
-language: generic
 matrix:
     include:
       - os: linux
-        dist: trusty
+        language: cpp
+        compiler: gcc
+        dist: xenial
         sudo: true
         addons:
           apt:
             update: true
             sources:
-              - george-edison55-precise-backports
               - ubuntu-toolchain-r-test
             packages:
-              - cmake
-              - cmake-data
               - python-dev
               - python-all
               - python-all-dev
@@ -26,14 +24,16 @@ matrix:
         env:
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
       - os: osx
+        language: generic
         sudo: true
+        before_install:
+          - brew upgrade cmake
 
-before_install:
+install:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install conan; else pip install --user conan; fi
   - sudo pip install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-install:
   - conan install --build=missing .
   - conan build .
 script:

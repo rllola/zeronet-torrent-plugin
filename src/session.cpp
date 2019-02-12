@@ -826,6 +826,7 @@ void bind_session()
         .value("flag_use_resume_save_path", add_torrent_params::flag_use_resume_save_path)
         .value("flag_merge_resume_http_seeds", add_torrent_params::flag_merge_resume_http_seeds)
         .value("flag_stop_when_ready", add_torrent_params::flag_stop_when_ready)
+        .value("default_flags", add_torrent_params::default_flags)
     ;
     class_<cache_status>("cache_status")
         .add_property("pieces", cache_status_pieces)
@@ -1090,6 +1091,11 @@ void bind_session()
 		.def_readonly("value_index", &stats_metric::value_index)
 		.def_readonly("type", &stats_metric::type)
 	;
+
+	enum_<stats_metric::metric_type_t>("metric_type_t")
+		.value("counter", stats_metric::type_counter)
+		.value("gauge", stats_metric::type_gauge)
+		;
 
     def("session_stats_metrics", session_stats_metrics);
     def("find_metric_idx", find_metric_idx);
