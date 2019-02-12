@@ -1,9 +1,9 @@
 platform:
-  - x64
+  - x86
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python27-x64"
+    #- PYTHON: "C:\\Python27-x64"
     - PYTHON: "C:\\Python27"
 
 artifacts:
@@ -13,6 +13,7 @@ build: off
 
 init:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
   - python -m pip install --upgrade pip
   - python -m pip install conan numpy
 
