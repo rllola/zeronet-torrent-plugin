@@ -13,7 +13,7 @@ build: off
 
 init:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat"
   - python -m pip install --upgrade pip
   - python -m pip install conan numpy
 
