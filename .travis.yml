@@ -11,6 +11,7 @@ matrix:
             sources:
               - ubuntu-toolchain-r-test
             packages:
+              - python3-pip
               - python-dev
               - python-all
               - python-all-dev
@@ -31,13 +32,13 @@ matrix:
 
 install:
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install conan; else pip install --user conan; fi
-  - sudo pip install urllib3[secure]
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip3 install conan; else pip3 install --user conan; fi
+  - sudo pip3 install urllib3[secure]
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - conan install --build=missing .
   - conan build .
 script:
-  - python test.py
+  - python3 test.py
 
 before_deploy:
   - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
