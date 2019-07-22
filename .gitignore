@@ -13,3 +13,5 @@ libtorrent.so
 Makefile
 CMakeCache.txt
 cmake_install.cmake
+graph_info.json
+conan.lock

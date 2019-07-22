@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
   end
 
-  config.vm.synced_folder ".", "/home/vagrant/ZeroNet-master/plugins/Torrent"
+  config.vm.synced_folder ".", "/home/vagrant/ZeroNet-py3/plugins/Torrent"
 
   # Install Zeronet and load all the requirements
   config.vm.provision :shell, path: "provision.sh", privileged: false
