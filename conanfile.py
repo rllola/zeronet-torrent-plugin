@@ -44,7 +44,7 @@ def OnMac():
   return platform.system() == 'Darwin'
 
 def FindPythonLibraries():
-  print "FindPythonLibraries"
+  print("FindPythonLibraries")
   include_dir = sysconfig.get_python_inc()
   library_dirs = GetPossiblePythonLibraryDirectories()
 
@@ -74,19 +74,19 @@ def FindPythonLibraries():
     major = PY_MAJOR, minor = PY_MINOR ), re.X )
   static_libraries = []
 
-  print library_dirs
+  print(library_dirs)
 
   for library_dir in library_dirs:
-    print "In Da loop"
-    print  p.exists( library_dir )
+    print("In Da loop")
+    print(p.exists( library_dir ))
     if not p.exists( library_dir ):
       continue
 
     # Files are sorted so that we found the non-versioned Python library before
     # the versioned one.
-    print os.listdir( library_dir )
+    print(os.listdir( library_dir ))
     for filename in sorted( os.listdir( library_dir ) ):
-      print filename
+      print(filename)
       if dynamic_name.match( filename ):
         return p.join( library_dir, filename ), include_dir
 
@@ -94,7 +94,7 @@ def FindPythonLibraries():
         static_libraries.append( p.join( library_dir, filename ) )
 
   if static_libraries and not OnWindows():
-    print "Nah"
+    print("Nah")
     dynamic_flag = ( '--enable-framework' if OnMac() else
                      '--enable-shared' )
     sys.exit( NO_DYNAMIC_PYTHON_ERROR.format( library = static_libraries[ 0 ],
@@ -162,12 +162,12 @@ class LibtorrentPythonConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        print "Looking for Python libraries"
+        print("Looking for Python libraries")
         library_dirs, include_dir = FindPythonLibraries()
-        print "We got it"
+        print("We got it")
         pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
         #pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
-        print pythonpaths
+        print(pythonpaths)
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
 

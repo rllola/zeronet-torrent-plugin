@@ -4,11 +4,8 @@ platform:
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python27"
-
-artifacts:
-  - path: build-windows-$(PLATFORM).zip
+    - PYTHON: "C:\\Python37-x64"
+    - PYTHON: "C:\\Python37"
 
 build: off
 
