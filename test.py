@@ -1,5 +1,5 @@
 import unittest
-import lib.libtorrent as libtorrent
+import libtorrent.libtorrent as libtorrent
 
 class TestBuild(unittest.TestCase):
 

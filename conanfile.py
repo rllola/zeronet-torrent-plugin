@@ -133,7 +133,7 @@ class LibtorrentPythonConan(ConanFile):
     version = "1.1.12"
     requires = "Libtorrent/1.1.12@lola/stable",
     settings = "os", "compiler", "arch", "build_type"
-    options = {"python_version": ["2.7"]}
+    options = {"python_version": ["2.7", "3.6"]}
     default_options = "python_version=2.7"
     exports = "*"
     generators = "cmake"
@@ -165,8 +165,8 @@ class LibtorrentPythonConan(ConanFile):
         print("Looking for Python libraries")
         library_dirs, include_dir = FindPythonLibraries()
         print("We got it")
-        pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
-        #pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so"
+        #pythonpaths = "-DPYTHON_INCLUDE_DIR=" + include_dir + " -DPYTHON_LIBRARY=" + library_dirs
+        pythonpaths = "-DPYTHON_INCLUDE_DIR=/usr/include/python3.6 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so"
         print(pythonpaths)
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)

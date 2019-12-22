@@ -1,1 +1,3 @@
-import TorrentPlugin
+import sys
+
+from . import TorrentPlugin
