@@ -134,7 +134,7 @@ class LibtorrentPythonConan(ConanFile):
     version = "1.1.12"
     requires = "Libtorrent/1.1.12@lola/stable",
     settings = "os", "compiler", "arch", "build_type"
-    options = {"python_version": ["2.7", "3.6"]}
+    options = {"python_version": ["2.7", "3.5", "3.6"]}
     default_options = "python_version=3.6"
     exports = "*"
     generators = "cmake"
