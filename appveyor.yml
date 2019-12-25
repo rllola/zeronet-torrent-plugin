@@ -25,7 +25,7 @@ test_script:
   - python test.py
 
 after_test:
-  - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - 7z a build-windows.zip libtorrent/lib/__init__.py libtorrent/lib/libtorrent.lib libtorrent/lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
 
 deploy:
