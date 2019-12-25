@@ -1,1 +1,1 @@
-from . import libtorrent
+from .lib import libtorrent

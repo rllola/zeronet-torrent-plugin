@@ -3,7 +3,7 @@ matrix:
       - os: linux
         language: cpp
         compiler: gcc
-        dist: xenial
+        dist: bionic
         sudo: true
         addons:
           apt:
