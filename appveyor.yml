@@ -19,7 +19,7 @@ install:
   - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
   - conan install --build=missing .
   - conan build .
-  - mv libtorrent.pyd lib/libtorrent.pyd
+  - mv libtorrent.pyd libtorrent/lib/libtorrent.pyd
 
 test_script:
   - python test.py
