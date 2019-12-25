@@ -1,5 +1,6 @@
 rm -rf CMakeFiles
 rm *.cmake
 rm *.txt
-rm lib/*.so
+rm libtorrent/*.so
 rm Makefile
+rm graph_info.json
