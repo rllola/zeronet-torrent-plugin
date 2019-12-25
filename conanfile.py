@@ -171,8 +171,7 @@ class LibtorrentPythonConan(ConanFile):
         print(pythonpaths)
         self.run('cmake src %s %s -DEXAMPLE_PYTHON_VERSION=%s' % (cmake.command_line, pythonpaths, self.options.python_version))
         self.run("cmake --build . %s" % cmake.build_config)
-        shutil.move("lib/libtorrent.so", "libtorrent/libtorrent.so")
-        shutil.rmtree("lib/")
+        shutil.move("lib", "libtorrent")
 
     def package(self):
         self.copy('*.py*')
