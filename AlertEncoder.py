@@ -9,7 +9,7 @@ class AlertEncoder(object):
         if self.response['what'] == 'read_piece_alert':
             self.encodeReadPieceAlert()
         elif self.response['what'] == 'add_torrent_alert':
-            print 'Add Torrent Alert !'
+            print('Add Torrent Alert !')
         elif self.response['what'] == 'piece_finished_alert':
             self.encodePieceFinishedAlert()
 
@@ -27,9 +27,10 @@ class AlertEncoder(object):
         else :
             self.response['pieceIndex'] = self.alert.piece
             self.response['size'] = self.alert.size
-            self.response['buffer'] = base64.b64encode(self.alert.buffer)
+            self.response['buffer'] = self.alert.buffer
 
     def encodePieceFinishedAlert(self):
+        self.response['handle'] = self.alert.handle
         self.response['pieceIndex'] = self.alert.piece_index
 
     def get(self):
