@@ -17,8 +17,6 @@ matrix:
       - os: osx
         language: generic
         sudo: true
-        before_install:
-          - brew upgrade cmake
 
 install:
   - make libtorrent
