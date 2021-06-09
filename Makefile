@@ -10,9 +10,10 @@ boost:
 	tar -zxf boost_1_74_0.tar.gz
 	rm boost_1_74_0.tar.gz
 	boost_1_74_0/bootstrap.sh
+	ls boost_1_74_0
 
 build-libtorrent:
-	cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --user-config=user-config.jam crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
+	./boost_1_74_0/b2 release --user-config=libtorrent/bindings/pythonuser-config.jam crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
 	cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
 
 test:
