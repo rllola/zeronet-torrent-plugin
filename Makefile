@@ -9,7 +9,7 @@ boost:
 	wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.gz
 	tar -zxf boost_1_74_0.tar.gz
 	rm boost_1_74_0.tar.gz
-	boost_1_74_0/bootstrap.sh
+	cd boost_1_74_0 && ./bootstrap.sh
 	ls boost_1_74_0
 
 build-libtorrent:
