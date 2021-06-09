@@ -8,8 +8,6 @@ matrix:
         addons:
           apt:
             update: true
-            sources:
-              - ubuntu-toolchain-r-test
             packages:
               - python3-pip
               - python-dev
@@ -22,8 +20,6 @@ matrix:
               - python-wheel
               - g++-9
               - gcc-9
-        env:
-          - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       - os: osx
         language: generic
         sudo: true
@@ -31,7 +27,6 @@ matrix:
           - brew upgrade cmake
 
 install:
-  - eval "${MATRIX_EVAL}"
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
