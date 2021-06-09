@@ -9,15 +9,9 @@ matrix:
           apt:
             update: true
             packages:
-              - python3-pip
               - python-dev
               - python-all
               - python-all-dev
-              - python-gevent
-              - python-greenlet
-              - python-minimal
-              - python-msgpack
-              - python-wheel
               - g++-9
               - gcc-9
       - os: osx
