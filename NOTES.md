@@ -39,23 +39,21 @@ zeroframe.cmd('helloWorld', {}, (response) => {
 })
 ```
 
-## Install libtorrent
+## Build libtorrent python bindings
 
 
-### For Linux
+### For Linux (deprecated)
 
-Be sure to have libboost-all-dev installed.
+We download boost 1.74 (min required). You will need `gcc`, `git` and `wget` installed.
 
 ```
-cd libtorrent
-git checkout RC_1_1_
-./bootstrap.sh
-./configure --enable-python-binding
-make install
+$ make libtorrent
+$ export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
+$ export BOOST_ROOT=${PWD}/boost_1_74_0
+$ make build-libtorrent
 ```
 
-Test :
+Test:
 ```
-python
->> import libtorrent
-``` 
+$ make test
+```

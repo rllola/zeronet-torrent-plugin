@@ -3,7 +3,7 @@ matrix:
       - os: linux
         language: cpp
         compiler: gcc
-        dist: bionic
+        dist: focal
         sudo: true
         addons:
           apt:
@@ -20,10 +20,10 @@ matrix:
               - python-minimal
               - python-msgpack
               - python-wheel
-              - g++-7
-              - gcc-7
+              - g++-9
+              - gcc-9
         env:
-          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+          - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       - os: osx
         language: generic
         sudo: true
@@ -32,17 +32,15 @@ matrix:
 
 install:
   - eval "${MATRIX_EVAL}"
-  - pip3 install setuptools
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip3 install conan; else pip3 install --user conan; fi
-  - sudo pip3 install urllib3[secure]
-  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-  - conan install --build=missing .
-  - conan build .
+  - make libtorrent
+  - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
+  - export BOOST_ROOT=${PWD}/boost_1_74_0
+  - make build-libtorrent
 script:
   - python3 test.py
 
 before_deploy:
-  - zip build-$TRAVIS_OS_NAME.zip libtorrent/__init__.py libtorrent/lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py
 deploy:
   provider: releases
   skip_cleanup: true
