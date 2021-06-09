@@ -1,8 +1,8 @@
 matrix:
     include:
       - os: linux
-        language: cpp
-        compiler: gcc
+        language: python
+        python: 3.8
         dist: focal
         sudo: true
         addons:
