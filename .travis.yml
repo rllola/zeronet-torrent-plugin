@@ -13,10 +13,11 @@ matrix:
       - os: osx
         language: generic
         sudo: true
+        before_install:
+          - brew upgrade python
 
 install:
   - make libtorrent
-  - python3.8-config --includes
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
   - make build-libtorrent
