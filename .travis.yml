@@ -1,10 +1,8 @@
 matrix:
     include:
       - os: linux
-        language: python
-        python: 3.8
-        virtualenv:
-          system_site_packages: true
+        language: cpp
+        compiler: gcc
         dist: focal
         sudo: true
         addons:
@@ -13,8 +11,7 @@ matrix:
               - g++-9
               - gcc-9
       - os: osx
-        language: python
-        python: 3.8
+        language: generic
         sudo: true
 
 install:
