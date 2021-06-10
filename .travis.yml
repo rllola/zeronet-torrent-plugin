@@ -9,13 +9,14 @@ matrix:
           apt:
             update: true
             packages:
-              - python3-dev
-              - python3-all
-              - python3-all-dev
+              - python3.8-dev
+              - python3.8-all
+              - python3.8-all-dev
               - g++-9
               - gcc-9
       - os: osx
-        language: generic
+        language: python
+        python: 3.8
         sudo: true
 
 install:
