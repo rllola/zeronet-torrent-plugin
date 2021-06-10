@@ -6,7 +6,7 @@ libtorrent: boost
 	cd libtorrent/bindings/python && echo "using python : 3.8 ;" >> user-config.jam
 
 boost:
-	wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.gz
+	wget -q https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.tar.gz
 	tar -zxf boost_1_74_0.tar.gz
 	rm boost_1_74_0.tar.gz
 	cd boost_1_74_0 && ./bootstrap.sh

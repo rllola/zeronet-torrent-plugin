@@ -3,6 +3,8 @@ matrix:
       - os: linux
         language: python
         python: 3.8
+        virtualenv:
+          system_site_packages: true
         dist: focal
         sudo: true
         addons:
