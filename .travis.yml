@@ -8,10 +8,6 @@ matrix:
         addons:
           apt:
             update: true
-            packages:
-              - python3-dev
-              - python3-all
-              - python3-all-dev
               - g++-9
               - gcc-9
       - os: osx
@@ -21,7 +17,7 @@ matrix:
 
 install:
   - make libtorrent
-  - find / -name pyconfig.h
+  - python3.8-config --includes
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
   - make build-libtorrent
