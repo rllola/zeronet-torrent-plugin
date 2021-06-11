@@ -12,7 +12,8 @@ matrix:
               - gcc-9
       - os: osx
         osx_image: xcode12.5
-        language: generic
+        language: python
+        python: 3.8
         sudo: true
         addons:
           homebrew:
@@ -23,6 +24,7 @@ install:
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
+  - which python
   - make build-libtorrent
 script:
   - python3 test.py
