@@ -11,16 +11,19 @@ matrix:
               - g++-9
               - gcc-9
       - os: osx
-        #osx_image: xcode12.5
-        language: python
-        python: 3.8
+        osx_image: xcode12.5
+        language: generic
         sudo: true
+        addons:
+          homebrew:
+          # update: true
+          packages: python3.8
 
 install:
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
-  - which python
+  - which python3
   - make build-libtorrent
 script:
   - python3 test.py
