@@ -23,7 +23,7 @@ install:
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
-  - ls /usr/local/lib/python3.8
+  - ls /usr/local/lib
   - make build-libtorrent
 script:
   - python3 test.py
