@@ -11,14 +11,10 @@ matrix:
               - g++-9
               - gcc-9
       - os: osx
-        osx_image: xcode12.5
+        #osx_image: xcode12.5
         language: python
         python: 3.8
         sudo: true
-        addons:
-          homebrew:
-          # update: true
-          packages: python3.8
 
 install:
   - make libtorrent
