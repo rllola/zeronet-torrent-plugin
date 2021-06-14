@@ -19,6 +19,8 @@ matrix:
             update: true
             packages:
               - python@3.8
+        before_install:
+          - ls /System/Library/Frameworks/Python.framework/Versions/3.8
 
 install:
   - which python3
