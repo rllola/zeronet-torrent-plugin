@@ -20,7 +20,7 @@ matrix:
             packages:
               - python@3.8
         before_install:
-          - ls /System/Library/Frameworks/Python.framework/Versions/3.8
+          - ls /System/Library/Frameworks/Python.framework/Versions
 
 install:
   - which python3
