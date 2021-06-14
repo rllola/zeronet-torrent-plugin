@@ -14,7 +14,7 @@ boost:
 	cd boost_1_74_0 && ./bootstrap.sh --with-python-version=3.9 --with-python=/usr/local/bin/python3
 
 build-libtorrent:
-	cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --user-config=user-config.jam crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
+	cd libtorrent/bindings/python && b2 release --user-config=user-config.jam crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
 	cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
 
 test:
