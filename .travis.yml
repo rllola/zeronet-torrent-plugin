@@ -18,14 +18,14 @@ matrix:
           homebrew:
             update: true
             packages:
-              - pyenv
               - python@3.8
         before_install:
           - pyenv install 3.8.10
-          - pyenv global 3.8.10
-          - pyenv versions
+          - pyenv shell 3.8.10
 
 install:
+  - which python3
+  - ls -l /usr/local/bin/python*
   - python --version
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
