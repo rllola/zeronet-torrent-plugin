@@ -2,9 +2,7 @@ libtorrent:
 	git clone https://github.com/arvidn/libtorrent.git
 	cd libtorrent && git submodule update --init
 	cd libtorrent && git checkout v2.0.4
-	cd libtorrent/bindings/python && echo "using gcc ;" >> user-config.jam
 	cd libtorrent/bindings/python && echo "using python : 3.9 ;" >> user-config.jam
-	echo "using gcc ;" >> ~/user-config.jam
 	echo "using python : 3.9 ;" >> ~/user-config.jam
 
 boost:
