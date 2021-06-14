@@ -14,19 +14,10 @@ matrix:
         osx_image: xcode12.5
         language: generic
         sudo: true
-        addons:
-          homebrew:
-            update: true
-            packages:
-              - python@3.8
-        before_install:
-          - ls /System/Library/Frameworks/Python.framework/Versions
 
 install:
-  - ls /System/Library/Frameworks/Python.framework/Versions
-  - which python3
   - ls -l /usr/local/bin/python*
-  - python --version
+  - python3 --version
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
