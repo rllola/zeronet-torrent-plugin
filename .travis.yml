@@ -18,6 +18,7 @@ matrix:
           homebrew:
             packages:
             - boost
+            - boost-build
 
 install:
   - python3 --version
