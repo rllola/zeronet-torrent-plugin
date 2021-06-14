@@ -17,8 +17,12 @@ matrix:
         addons:
           homebrew:
             update: true
-            packages: 
+            packages:
+              - pyenv
               - python@3.8
+        before_install:
+          - pyenv install 3.8
+          - pyenv global 3.8
 
 install:
   - python --version
