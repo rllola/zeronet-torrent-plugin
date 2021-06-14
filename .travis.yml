@@ -23,8 +23,7 @@ matrix:
 install:
   - python3 --version
   - make libtorrent
-  - cat ~/user-config.jam
-  - cat libtorrent/bindings/python/user-config.jam
+  - which b2
   #- export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   #- export BOOST_ROOT=${PWD}/boost_1_74_0
   - make build-libtorrent

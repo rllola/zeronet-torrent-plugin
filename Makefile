@@ -8,7 +8,6 @@ boost:
 	tar -zxf boost_1_74_0.tar.gz
 	rm boost_1_74_0.tar.gz
 	cd boost_1_74_0 && ./bootstrap.sh --with-python-version=3.9 --with-python=/usr/local/bin/python3
-	cd boost_1_74_0 && ./b2
 
 build-libtorrent:
 	cd libtorrent/bindings/python && b2 release crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
