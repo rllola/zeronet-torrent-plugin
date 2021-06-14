@@ -14,14 +14,16 @@ matrix:
         osx_image: xcode12.5
         language: generic
         sudo: true
+        addons:
+          homebrew:
+            packages:
+            - boost
 
 install:
   - python3 --version
-  - echo "using gcc ;" >> ~/user-config.jam
-  - echo "using python &#58; 3.9 ;" >> ~/user-config.jam
   - make libtorrent
-  - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
-  - export BOOST_ROOT=${PWD}/boost_1_74_0
+  #- export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
+  #- export BOOST_ROOT=${PWD}/boost_1_74_0
   - make build-libtorrent
 script:
   - python3 test.py
