@@ -18,7 +18,7 @@ matrix:
 install:
   - python3 --version
   - echo "using gcc ;" >> ~/user-config.jam
-  - echo "using python : 3.9 ;" >> ~/user-config.jam
+  - echo "using python &#58; 3.9 ;" >> ~/user-config.jam
   - make libtorrent
   - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   - export BOOST_ROOT=${PWD}/boost_1_74_0
