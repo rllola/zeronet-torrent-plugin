@@ -21,7 +21,7 @@ matrix:
               - pyenv
               - python@3.8
         before_install:
-          - pyenv install 3.8
+          - pyenv install 3.8.10
           - pyenv global 3.8.10
 
 install:
