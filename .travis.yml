@@ -23,6 +23,7 @@ matrix:
           - ls /System/Library/Frameworks/Python.framework/Versions
 
 install:
+  - ls /System/Library/Frameworks/Python.framework/Versions
   - which python3
   - ls -l /usr/local/bin/python*
   - python --version
