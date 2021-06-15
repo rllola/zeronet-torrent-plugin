@@ -11,10 +11,9 @@ matrix:
             packages:
               - g++-9
               - gcc-9
-              - python3.9          
+              - python3.9
+              - python3.9-dev   
         install:
-          - ls -l /usr/bin/python*
-          - python --version
           - make boost
           - make libtorrent
           - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
@@ -33,9 +32,7 @@ matrix:
             - boost-python3
             - boost-build
         install:
-          - ls -l /usr/bin/python*
           - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
-          - python --version
           - make libtorrent
           - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
           - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
