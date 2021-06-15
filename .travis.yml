@@ -13,6 +13,7 @@ matrix:
               - gcc-9
               - python3.9          
         install:
+          - ls -l /usr/bin/python*
           - update-alternatives --set python /usr/bin/python3.9
           - python --version
           - make boost
@@ -33,6 +34,7 @@ matrix:
             - boost-python3
             - boost-build
         install:
+          - ls -l /usr/bin/python*
           - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
           - python --version
           - make libtorrent
