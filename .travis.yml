@@ -14,7 +14,6 @@ matrix:
               - python3.9          
         install:
           - ls -l /usr/bin/python*
-          - update-alternatives --set python /usr/bin/python3.9
           - python --version
           - make boost
           - make libtorrent
