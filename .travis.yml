@@ -14,13 +14,14 @@ matrix:
               - python3.9
               - python3.9-dev   
         install:
+          - make config-linux
           - make boost
           - make libtorrent
           - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
           - export BOOST_ROOT=${PWD}/boost_1_74_0
           - cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
           - ls
-          - cd ~
+          - cd ../../..
           - cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
 
       - os: osx
@@ -35,6 +36,7 @@ matrix:
             - boost-build
         install:
           - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
+          - make config-os
           - make libtorrent
           - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
           - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
