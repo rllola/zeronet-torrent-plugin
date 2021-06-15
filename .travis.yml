@@ -13,7 +13,7 @@ matrix:
               - gcc-9
               - python3.9          
         install:
-          - update-alternatives  --set python /usr/bin/python3.9
+          - update-alternatives --set python /usr/bin/python3.9
           - python --version
           - make boost
           - make libtorrent
@@ -34,9 +34,10 @@ matrix:
             - boost-build
         install:
           - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
+          - python --version
+          - make libtorrent
+          - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
           - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
-
-install:
 
 script:
   - python3 test.py
