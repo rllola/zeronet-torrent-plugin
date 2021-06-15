@@ -16,7 +16,7 @@ build-libtorrent: boost
 
 config-linux:
 	echo "using gcc ;" >> ~/user-config.jam
-	echo "using python : 3.9 ;" >> ~/user-config.jam
+	echo "using python : 3.8 ;" >> ~/user-config.jam
 
 config-os:
 	echo "using darwin ;" >> ~/user-config.jam
