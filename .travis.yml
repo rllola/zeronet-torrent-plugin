@@ -11,8 +11,16 @@ matrix:
             packages:
               - g++-9
               - gcc-9
-        after_install:
-          - cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
+              - python3.9          
+        install:
+          - update-alternatives  --set python /usr/bin/python3.9
+          - python --version
+          - make boost
+          - make libtorrent
+          - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
+          - export BOOST_ROOT=${PWD}/boost_1_74_0
+          - cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.9 libtorrent-link=static boost-link=static
+          - cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
 
       - os: osx
         osx_image: xcode12.5
@@ -22,19 +30,13 @@ matrix:
           homebrew:
             packages:
             - openssl@1.1
-            - python@3.8
-        before_install:
-          - ln -s -f /usr/local/bin/python3.8 /usr/local/bin/python
-        after_install:
-          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
+            - boost-python3
+            - boost-build
+        install:
+          - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
+          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-17-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
 
 install:
-  - ls -l /usr/local/bin/python*
-  - python --version
-  - make libtorrent
-  - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
-  - export BOOST_ROOT=${PWD}/boost_1_74_0
-  - cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
 
 script:
   - python3 test.py
