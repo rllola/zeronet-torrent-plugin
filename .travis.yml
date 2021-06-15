@@ -36,9 +36,9 @@ matrix:
           - make config-os
           - make libtorrent
           - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
-          - ls
+          - ls bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/
           - cd ../../..
-          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.9/libtorrent.so lib/
+          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/libtorrent.so lib/
 
 script:
   - python3 test.py
