@@ -17,13 +17,15 @@ matrix:
         addons:
           homebrew:
             packages:
+            - openssl@1.1
             - boost-python3
             - boost-build
 
 install:
-  - python3 --version
+  - ls -l /usr/local/bin/python*
+  - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
+  - python --version
   - make libtorrent
-  - which b2
   #- export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
   #- export BOOST_ROOT=${PWD}/boost_1_74_0
   - make build-libtorrent
