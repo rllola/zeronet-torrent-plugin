@@ -22,6 +22,7 @@ install:
   - nmake libtorrent
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
+  - echo %BOOST_ROOT%
   - (cd %BOOST_ROOT% && dir)
   - (cd %BOOST_ROOT% && .\bootstrap.bat)
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
