@@ -20,7 +20,7 @@ init:
 install:
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"'
   - nmake libtorrent
-  - curl -o boost_1_74_0.zip https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
+  - curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
   - dir
   - unzip boost_1_74_0.zip
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
