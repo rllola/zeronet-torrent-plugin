@@ -18,6 +18,7 @@ init:
   - python -m pip install numpy
 
 install:
+  - "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
   - nmake libtorrent
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
