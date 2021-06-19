@@ -16,7 +16,7 @@ init:
   - python -m pip install numpy
 
 install:
-  - make libtorrent
+  - nmake libtorrent
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - (cd %BOOST_ROOT% && .\bootstrap.bat)
