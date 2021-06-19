@@ -23,7 +23,7 @@ install:
   - curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
   - dir
   - unzip boost_1_74_0.zip
-  - set BOOST_ROOT=C:\Libraries\boost_1_73_0
+  - set BOOST_ROOT=%HOME%\zeronet-torrent-plugin \boost_1_74_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - cd %BOOST_ROOT% && .\bootstrap.bat
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
