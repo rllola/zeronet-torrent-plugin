@@ -22,7 +22,7 @@ install:
   - nmake libtorrent
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
-  - (cd %BOOST_ROOT% && dir && .\bootstrap.bat)
+  - (cd %BOOST_ROOT% && dir)
   - (cd %BOOST_ROOT% && .\bootstrap.bat)
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
   - (cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static)
