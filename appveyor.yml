@@ -5,7 +5,7 @@ platform:
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python38-x64"
+    - PYTHON: "C:\\Python37-x64"
 
 artifacts:
   - path: build-windows.zip
@@ -20,12 +20,13 @@ init:
 install:
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"'
   - nmake libtorrent
+  - wget https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
+  - unzip boost_1_74_0.zip
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - cd %BOOST_ROOT% && .\bootstrap.bat
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
-  - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
-  - dir
+  - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration cxxstd=17 python=3.7 libtorrent-link=static boost-link=static
 
 test_script:
   - python test.py
