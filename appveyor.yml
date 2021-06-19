@@ -3,7 +3,7 @@ platform:
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python37-x64"
+    - PYTHON: "C:\\Python38-x64"
 
 artifacts:
   - path: build-windows.zip
@@ -13,19 +13,22 @@ build: off
 init:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - python -m pip install --upgrade pip
-  - python -m pip install conan numpy
+  - python -m pip install numpy
 
 install:
-  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-  - conan install --build=missing .
-  - conan build .
-  - mv libtorrent.pyd libtorrent/lib/libtorrent.pyd
+  - make libtorrent
+  - set BOOST_ROOT=C:\Libraries\boost_1_73_0
+  - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
+  - (cd %BOOST_ROOT% && .\bootstrap.bat)
+  - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
+  - (cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static)
+  - (cd libtorrent/bindings/python && dir)
 
 test_script:
   - python test.py
 
 after_test:
-  - 7z a build-windows.zip libtorrent/__init__.py libtorrent/lib/libtorrent.lib libtorrent/lib/libtorrent.pyd src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd __init__.py TorrentPlugin.py AlertEncoder.py test.py
   - dir
 
 deploy:
