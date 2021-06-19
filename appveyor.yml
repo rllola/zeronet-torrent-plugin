@@ -24,7 +24,7 @@ install:
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - cd %BOOST_ROOT% && .\bootstrap.bat
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
-  - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration crypto=openssl cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
+  - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
   - dir
 
 test_script:
