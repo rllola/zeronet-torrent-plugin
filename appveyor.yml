@@ -28,7 +28,8 @@ install:
   - cd C:/projects/zeronet-torrent-plugin/boost_1_74_0/ 
   - bootstrap.bat
   - cmd: echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%/user-config.jam
-  - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration cxxstd=17 python=3.7 libtorrent-link=static boost-link=static
+  - cd C:/projects/zeronet-torrent-plugin/libtorrent/bindings/python
+  - C:/projects/zeronet-torrent-plugin/boost_1_74_0/b2 release --debug-configuration cxxstd=17 python=3.7 libtorrent-link=static boost-link=static
 
 test_script:
   - python test.py
