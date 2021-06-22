@@ -22,12 +22,12 @@ install:
   - nmake libtorrent
   - curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
   - dir
-  - unzip boost_1_74_0.zip
-  - echo %HOME%
-  - set BOOST_ROOT=%HOME%\zeronet-torrent-plugin\boost_1_74_0
-  - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
+  - unzip -q boost_1_74_0.zip
+  - cmd: echo %HOME%
+  - cmd: set BOOST_ROOT=%HOME%\zeronet-torrent-plugin\boost_1_74_0
+  - cmd: set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - cd %BOOST_ROOT% && .\bootstrap.bat
-  - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
+  - cmd: echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
   - cd libtorrent/bindings/python && %BOOST_ROOT%/b2 release --debug-configuration cxxstd=17 python=3.7 libtorrent-link=static boost-link=static
 
 test_script:
