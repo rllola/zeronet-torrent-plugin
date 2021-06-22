@@ -24,7 +24,7 @@ install:
   - dir
   - unzip boost_1_74_0.zip
   - echo %HOME%
-  - set BOOST_ROOT=%HOME%\zeronet-torrent-plugin \boost_1_74_0
+  - set BOOST_ROOT=%HOME%\zeronet-torrent-plugin\boost_1_74_0
   - set BOOST_BUILD_PATH=%BOOST_ROOT%\tools\build
   - cd %BOOST_ROOT% && .\bootstrap.bat
   - echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%\user-config.jam
