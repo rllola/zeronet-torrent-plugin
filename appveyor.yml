@@ -31,6 +31,7 @@ install:
   - cd C:/projects/zeronet-torrent-plugin/libtorrent/bindings/python
   - python --version
   - C:/projects/zeronet-torrent-plugin/boost_1_74_0/b2 release --debug-configuration address-model=64 cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
+  - cp C:\projects\zeronet-torrent-plugin\libtorrent\bindings\python\bin\msvc-14.2\release\address-model-64\cxxstd-14-iso\python-3.8\threading-multi\libtorrent.pyd C:\projects\zeronet-torrent-plugin\lib
 
 test_script:
   - python test.py
