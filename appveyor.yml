@@ -21,7 +21,6 @@ install:
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"'
   - nmake libtorrent
   - curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
-  - dir
   - unzip -q boost_1_74_0.zip
   - cmd: set BOOST_ROOT=C:/projects/zeronet-torrent-plugin/boost_1_74_0
   - cmd: set BOOST_BUILD_PATH=C:/projects/zeronet-torrent-plugin/boost_1_74_0/tools/build
@@ -29,12 +28,9 @@ install:
   - bootstrap.bat
   - cmd: echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%/user-config.jam
   - cd C:/projects/zeronet-torrent-plugin/libtorrent/bindings/python
-  - python --version
   - C:/projects/zeronet-torrent-plugin/boost_1_74_0/b2 release --debug-configuration address-model=64 cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
   - cp C:\projects\zeronet-torrent-plugin\libtorrent\bindings\python\bin\msvc-14.2\release\address-model-64\cxxstd-14-iso\python-3.8\threading-multi\libtorrent.pyd C:\projects\zeronet-torrent-plugin\lib
   - cp C:\projects\zeronet-torrent-plugin\libtorrent\bindings\python\bin\msvc-14.2\release\address-model-64\cxxstd-14-iso\python-3.8\threading-multi\libtorrent.lib C:\projects\zeronet-torrent-plugin\lib
-  - cd C:\projects\zeronet-torrent-plugin\libtorrent\bindings\python\bin\msvc-14.2\release\address-model-64\cxxstd-14-iso\python-3.8\threading-multi
-  - dir
   - cd C:\projects\zeronet-torrent-plugin
 
 test_script:
@@ -42,7 +38,6 @@ test_script:
 
 after_test:
   - 7z a build-windows.zip lib/__init__.py lib/libtorrent.lib lib/libtorrent.pyd __init__.py TorrentPlugin.py AlertEncoder.py test.py
-  - dir
 
 deploy:
   provider: GitHub
