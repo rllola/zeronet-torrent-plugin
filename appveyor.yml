@@ -34,6 +34,7 @@ install:
   - cp C:\projects\zeronet-torrent-plugin\libtorrent\bindings\python\bin\msvc-14.2\release\address-model-64\cxxstd-14-iso\python-3.8\threading-multi\libtorrent.pyd C:\projects\zeronet-torrent-plugin\lib
   - cd C:\projects\zeronet-torrent-plugin\lib
   - dir
+  - cd C:\projects\zeronet-torrent-plugin
 
 test_script:
   - python test.py
