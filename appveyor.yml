@@ -29,7 +29,7 @@ install:
   - bootstrap.bat
   - cmd: echo using msvc ; >>%HOMEDRIVE%%HOMEPATH%/user-config.jam
   - cd C:/projects/zeronet-torrent-plugin/libtorrent/bindings/python
-  - C:/projects/zeronet-torrent-plugin/boost_1_74_0/b2 release --debug-configuration cxxstd=17 python=3.8 libtorrent-link=static boost-link=static
+  - C:/projects/zeronet-torrent-plugin/boost_1_74_0/b2 release --debug-configuration cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
 
 test_script:
   - python test.py
