@@ -3,46 +3,48 @@ matrix:
       - os: linux
         language: cpp
         compiler: gcc
-        dist: bionic
+        dist: focal
         sudo: true
         addons:
           apt:
             update: true
-            sources:
-              - ubuntu-toolchain-r-test
             packages:
-              - python3-pip
-              - python-dev
-              - python-all
-              - python-all-dev
-              - python-gevent
-              - python-greenlet
-              - python-minimal
-              - python-msgpack
-              - python-wheel
-              - g++-7
-              - gcc-7
-        env:
-          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+              - g++-9
+              - gcc-9 
+        install:
+          - make config-linux
+          - make boost
+          - make libtorrent
+          - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
+          - export BOOST_ROOT=${PWD}/boost_1_74_0
+          - cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
+          - cd ../../..
+          - cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
+
       - os: osx
+        osx_image: xcode12.5
         language: generic
         sudo: true
-        before_install:
-          - brew upgrade cmake
+        addons:
+          homebrew:
+            packages:
+            - openssl@1.1
+            - boost-python3
+            - boost-build
+        install:
+          - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
+          - make config-os
+          - make libtorrent
+          - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
+          - ls bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/
+          - cd ../../..
+          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/libtorrent.so lib/
 
-install:
-  - eval "${MATRIX_EVAL}"
-  - pip3 install setuptools
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip3 install conan; else pip3 install --user conan; fi
-  - sudo pip3 install urllib3[secure]
-  - conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-  - conan install --build=missing .
-  - conan build .
 script:
   - python3 test.py
 
 before_deploy:
-  - zip build-$TRAVIS_OS_NAME.zip libtorrent/__init__.py libtorrent/lib/libtorrent.so src/* __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py
 deploy:
   provider: releases
   skip_cleanup: true
