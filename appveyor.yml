@@ -20,6 +20,7 @@ init:
 install:
   - '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"'
   - nmake libtorrent
+  - dir
   - curl -LO https://boostorg.jfrog.io/artifactory/main/release/1.74.0/source/boost_1_74_0.zip
   - unzip -q boost_1_74_0.zip
   - cmd: set BOOST_ROOT=C:/projects/zeronet-torrent-plugin/boost_1_74_0
