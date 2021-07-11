@@ -1,13 +1,16 @@
 import logging
-import lib.libtorrent as libtorrent
 import time
 import base64
 import gevent
+import sys
+import libtorrent
+
 from .AlertEncoder import AlertEncoder
 
 from Plugin import PluginManager
 
-# semver follow https://semver.org/
+libtorrent = libtorrent.libtorrent
+
 VERSION = '0.3.0'
 
 def popAlerts(session):
@@ -17,7 +20,7 @@ def popAlerts(session):
         for alert in alertsList:
             result = AlertEncoder(alert)
             for instanceOfUiWebsocketPlugin in UiWebsocketPlugin._instances:
-                if alert.what() == 'read_piece_alert':
+                if alert.what() == 'read_piece':
                     for instanceOfUiRequestPlugin in UiRequestPlugin._instances:
                         if result.get()["pieceIndex"] in instanceOfUiRequestPlugin.piece_index_requested:
                             instanceOfUiRequestPlugin.requested_pieces.append(result.get())
@@ -101,9 +104,9 @@ class UiWebsocketPlugin(object):
             try:
                 # Test if a magnet
                 params = libtorrent.parse_magnet_uri(torrentIdentifier)
-                params['save_path'] = save_path
+                params.save_path = save_path
                 # HACK:
-                # Doesn't recognise sha1_hash python object when addded to session if not converted to string
+                # Doesn't recognise sha1_hash python object when added to session if not converted to string
                 # 'No registered converter was able to produce a C++ rvalue of type bytes from this Python object of type sha1_hash'
                 #params['info_hash'] = params['info_hash'].to_string()
             except Exception as exception:
@@ -111,11 +114,11 @@ class UiWebsocketPlugin(object):
                             'storage_mode': libtorrent.storage_mode_t.storage_mode_sparse, \
                             'info_hash': torrentIdentifier.decode('hex') }
         try:
-            h = session.add_torrent(params)
+            session.async_add_torrent(params)
         except Exception as exception:
             self.response(to, {'error': str(exception)})
         else:
-            info_hash = h.info_hash()
+            info_hash = params.info_hashes.get_best()
             self.response(to, {'info_hash': str(info_hash)})
 
     def actionTorrentStatus(self, to, info_hash):
@@ -132,6 +135,7 @@ class UiWebsocketPlugin(object):
             self.response(to, {'error': 'Torrent not found'})
 
     def actionGetTorrentInfo(self, to, info_hash):
+        print(info_hash)
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -204,8 +208,6 @@ class TorrentFile(object):
         piece_index = (self.file.offset + self.read_bytes) // ti.piece_length()
         print("Piece Index requested : {} ( ({} + {}) // {})".format(piece_index, self.file.offset, self.read_bytes, ti.piece_length()))
 
-        #print("File size : {}".format(self.file.size))
-
         self.uirequest.piece_index_requested.append(piece_index)
 
         # TODO: `set_piece_deadline` has the same behavior as read when piece already available
@@ -214,7 +216,7 @@ class TorrentFile(object):
         else:
             print("Piece not available!")
             # deadline in milliseconds so we have a 900 seconds deadline after what maybe we can have a timeout ?
-            self.torrent_handle.set_piece_deadline(piece_index, 900 * 1000, libtorrent.deadline_flags.alert_when_available)
+            self.torrent_handle.set_piece_deadline(piece_index, 900 * 1000, libtorrent.deadline_flags_t.alert_when_available)
 
         while len(self.uirequest.requested_pieces) < 1:
             gevent.sleep(0.1)

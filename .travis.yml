@@ -17,9 +17,9 @@ matrix:
           - make libtorrent
           - export BOOST_BUILD_PATH=${PWD}/boost_1_74_0/tools/build
           - export BOOST_ROOT=${PWD}/boost_1_74_0
-          - cd libtorrent/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
+          - cd libtorrent-repo/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
           - cd ../../..
-          - cp libtorrent/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
+          - cp libtorrent-repo/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
 
       - os: osx
         osx_image: xcode12.5
@@ -35,16 +35,16 @@ matrix:
           - ln -s -f /usr/local/bin/python3.9 /usr/local/bin/python
           - make config-os
           - make libtorrent
-          - cd libtorrent/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
+          - cd libtorrent-repo/bindings/python && b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.9 libtorrent-link=static boost-link=static
           - ls bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/
           - cd ../../..
-          - cp libtorrent/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/libtorrent.so lib/
+          - cp libtorrent-repo/bindings/python/bin/darwin-12.0.5/release/crypto-openssl/cxxstd-14-iso/python-3.9/libtorrent.so libtorrent/
 
 script:
   - python3 test.py
 
 before_deploy:
-  - zip build-$TRAVIS_OS_NAME.zip lib/__init__.py lib/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - zip build-$TRAVIS_OS_NAME.zip libtorrent/__init__.py libtorrent/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py
 deploy:
   provider: releases
   skip_cleanup: true

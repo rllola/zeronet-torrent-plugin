@@ -6,22 +6,12 @@ An attempt to create a plugin that will allow the use of libtorrent to share big
 
 Example site : http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
 
-## Download
-
-In your Zeronet folder :
-```
-cd plugins
-git clone https://github.com/rllola/zeronet-torrent-plugin.git Torrent
-```
-
 ## Build
 
-You need to have conan installed : https://www.conan.io/downloads
+We need to build libtorrent python bindings.
 
 ```
-conan remote add libtorrent https://api.bintray.com/conan/rllola80/Libtorrent
-conan install --build=missing .
-conan build .
+
 python test.py
 ```
 

@@ -1,6 +1,6 @@
 *.log
-lib/*.so
+libtorrent/*.so
 __pycache__
-libtorrent
 *.tar.gz
 boost_*
+*.torrent
