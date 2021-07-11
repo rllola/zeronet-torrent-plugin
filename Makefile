@@ -1,4 +1,4 @@
-libtorrent:
+libtorrent-repo:
 	git clone https://github.com/arvidn/libtorrent.git libtorrent-repo
 	cd libtorrent-repo && git submodule update --init
 	cd libtorrent-repo && git checkout v2.0.4

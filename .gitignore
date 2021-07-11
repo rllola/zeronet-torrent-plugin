@@ -4,3 +4,4 @@ __pycache__
 *.tar.gz
 boost_*
 *.torrent
+libtorrent-repo/
