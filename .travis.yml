@@ -19,7 +19,7 @@ matrix:
           - export BOOST_ROOT=${PWD}/boost_1_74_0
           - cd libtorrent-repo/bindings/python && ../../../boost_1_74_0/b2 release --debug-configuration crypto=openssl cxxstd=14 python=3.8 libtorrent-link=static boost-link=static
           - cd ../../..
-          - cp libtorrent-repo/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so lib/
+          - cp libtorrent-repo/bindings/python/bin/gcc-9/release/crypto-openssl/cxxstd-14-iso/libtorrent-python-pic-on/python-3.8/libtorrent.so libtorrent/
 
       - os: osx
         osx_image: xcode12.5
