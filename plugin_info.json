@@ -1,5 +1,6 @@
 {
 	"name": "Torrent",
 	"description": "Torrent client in ZeroNet.",
-	"default": "enabled"
+	"default": "enabled",
+	"rev": 4
 }

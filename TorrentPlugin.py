@@ -11,7 +11,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.3.0'
+VERSION = '0.4.0'
 
 def popAlerts(session):
     while 1:
@@ -135,7 +135,6 @@ class UiWebsocketPlugin(object):
             self.response(to, {'error': 'Torrent not found'})
 
     def actionGetTorrentInfo(self, to, info_hash):
-        print(info_hash)
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -206,7 +205,7 @@ class TorrentFile(object):
     def read(self, buff=64 * 1024):
         ti = self.torrent_handle.torrent_file()
         piece_index = (self.file.offset + self.read_bytes) // ti.piece_length()
-        print("Piece Index requested : {} ( ({} + {}) // {})".format(piece_index, self.file.offset, self.read_bytes, ti.piece_length()))
+        #print("Piece Index requested : {} ( ({} + {}) // {})".format(piece_index, self.file.offset, self.read_bytes, ti.piece_length()))
 
         self.uirequest.piece_index_requested.append(piece_index)
 
