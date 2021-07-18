@@ -42,7 +42,7 @@ zeroframe.cmd('helloWorld', {}, (response) => {
 ## Build libtorrent python bindings
 
 
-### For Linux (deprecated)
+### For Linux
 
 We download boost 1.74 (min required). You will need `gcc`, `git` and `wget` installed.
 
