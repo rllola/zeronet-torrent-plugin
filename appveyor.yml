@@ -43,7 +43,7 @@ after_test:
 deploy:
   provider: GitHub
   auth_token:
-    secure: 6eX2olaIxe4TsfETod+SYOyDsIKwmDivjirb7RPvl/Zd4zYW3dzGr4MieJ2BP89P # your encrypted token from GitHub
+    secure: dSaK+GaXURrAcZoxypp7VRGj7JLzSdBvQLkOZh5tAAn4wyyCMzaH4DqXgrLtAy1h
   artifact: build-windows.zip
   prerelease: true
   force_update: true
