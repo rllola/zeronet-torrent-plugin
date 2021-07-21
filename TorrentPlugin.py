@@ -11,7 +11,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.4.0'
+VERSION = '0.4.1'
 
 def popAlerts(session):
     while 1:

@@ -44,7 +44,7 @@ script:
   - python3 test.py
 
 before_deploy:
-  - zip build-$TRAVIS_OS_NAME.zip libtorrent/__init__.py libtorrent/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py
+  - zip build-$TRAVIS_OS_NAME.zip libtorrent/__init__.py libtorrent/libtorrent.so __init__.py TorrentPlugin.py AlertEncoder.py test.py plugin_info.json
 deploy:
   provider: releases
   skip_cleanup: true
