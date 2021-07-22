@@ -11,7 +11,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.4.1'
+VERSION = '0.4.2'
 
 def popAlerts(session):
     while 1:
@@ -118,7 +118,13 @@ class UiWebsocketPlugin(object):
         except Exception as exception:
             self.response(to, {'error': str(exception)})
         else:
-            info_hash = params.info_hashes.get_best()
+            if type(params) is libtorrent.add_torrent_params:
+                info_hash = params.info_hashes.get_best()
+            else:
+                if not info is None:
+                    info_hash = info.info_hashes().get_best()
+                else:
+                    info_hash = params['info_hash']
             self.response(to, {'info_hash': str(info_hash)})
 
     def actionTorrentStatus(self, to, info_hash):
