@@ -11,7 +11,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.4.2'
+VERSION = '0.4.3'
 
 def popAlerts(session):
     while 1:
@@ -20,7 +20,7 @@ def popAlerts(session):
         for alert in alertsList:
             result = AlertEncoder(alert)
             for instanceOfUiWebsocketPlugin in UiWebsocketPlugin._instances:
-                if alert.what() == 'read_piece':
+                if alert.what() == 'read_piece' and not 'error' in result.get():
                     for instanceOfUiRequestPlugin in UiRequestPlugin._instances:
                         if result.get()["pieceIndex"] in instanceOfUiRequestPlugin.piece_index_requested:
                             instanceOfUiRequestPlugin.requested_pieces.append(result.get())
@@ -222,17 +222,22 @@ class TorrentFile(object):
             print("Piece not available!")
             # deadline in milliseconds so we have a 900 seconds deadline after what maybe we can have a timeout ?
             self.torrent_handle.set_piece_deadline(piece_index, 900 * 1000, libtorrent.deadline_flags_t.alert_when_available)
-
+        
         while len(self.uirequest.requested_pieces) < 1:
             gevent.sleep(0.1)
             pass
 
-        if self._offset:
-            chunk_file = self.uirequest.requested_pieces.pop(0)["buffer"][self._offset:]
-            self._offset = 0
-        else:
-            chunk_file = self.uirequest.requested_pieces.pop(0)["buffer"]
-        self.read_bytes += len(chunk_file)
+        chunk_file = 0x00
+        for piece in self.uirequest.requested_pieces:
+            if piece["pieceIndex"] == piece_index:
+                if self._offset:
+                    chunk_file = piece["buffer"][self._offset:]
+                    self._offset = 0
+                else:
+                    chunk_file = piece["buffer"]
+                self.read_bytes += len(chunk_file)
+                self.uirequest.requested_pieces.remove(piece)
+                break
 
         return chunk_file
 
