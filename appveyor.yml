@@ -6,9 +6,11 @@ platform:
 environment:
   matrix:
     - PYTHON: "C:\\Python38-x64"
-
+      PYV: "3.8"
+    - PYTHON: "C:\\Python37-x64"
+      PYV: "3.7"
 artifacts:
-  - path: build-windows.zip
+  - path: build-windows-*.zip
 
 build: off
 
@@ -38,7 +40,7 @@ test_script:
   - python test.py
 
 after_test:
-  - 7z a build-windows.zip libtorrent/__init__.py libtorrent/libtorrent.lib libtorrent/libtorrent.pyd __init__.py TorrentPlugin.py AlertEncoder.py test.py plugin_info.json
+  - 7z a build-windows-%PYV%.zip libtorrent/__init__.py libtorrent/libtorrent.lib libtorrent/libtorrent.pyd __init__.py TorrentPlugin.py AlertEncoder.py test.py plugin_info.json
 
 deploy:
   provider: GitHub
