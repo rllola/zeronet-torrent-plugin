@@ -11,7 +11,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.4.3'
+VERSION = '0.4.4'
 
 def popAlerts(session):
     while 1:
@@ -209,6 +209,7 @@ class TorrentFile(object):
 
 
     def read(self, buff=64 * 1024):
+        chunk_file = 0x00
         ti = self.torrent_handle.torrent_file()
         piece_index = (self.file.offset + self.read_bytes) // ti.piece_length()
         #print("Piece Index requested : {} ( ({} + {}) // {})".format(piece_index, self.file.offset, self.read_bytes, ti.piece_length()))
@@ -223,21 +224,19 @@ class TorrentFile(object):
             # deadline in milliseconds so we have a 900 seconds deadline after what maybe we can have a timeout ?
             self.torrent_handle.set_piece_deadline(piece_index, 900 * 1000, libtorrent.deadline_flags_t.alert_when_available)
         
-        while len(self.uirequest.requested_pieces) < 1:
+        while chunk_file == 0x00:
+            for piece in self.uirequest.requested_pieces:
+                if piece["pieceIndex"] == piece_index:
+                    if self._offset:
+                        chunk_file = piece["buffer"][self._offset:]
+                        self._offset = 0
+                    else:
+                        chunk_file = piece["buffer"]
+                    self.read_bytes += len(chunk_file)
+                    self.uirequest.requested_pieces.remove(piece)
+                    break
             gevent.sleep(0.1)
             pass
-
-        chunk_file = 0x00
-        for piece in self.uirequest.requested_pieces:
-            if piece["pieceIndex"] == piece_index:
-                if self._offset:
-                    chunk_file = piece["buffer"][self._offset:]
-                    self._offset = 0
-                else:
-                    chunk_file = piece["buffer"]
-                self.read_bytes += len(chunk_file)
-                self.uirequest.requested_pieces.remove(piece)
-                break
 
         return chunk_file
 

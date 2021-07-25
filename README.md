@@ -2,11 +2,23 @@
 
 [![Build Status](https://travis-ci.org/rllola/zeronet-torrent-plugin.svg?branch=master)](https://travis-ci.org/rllola/zeronet-torrent-plugin)
 
+**Important! This is still work in progress. Don't use it if you don't want to.**
+
 Example site and installer : http://127.0.0.1:43110/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/
 
-This project is an attempt to integrate a Torrent client in ZeroNet as a plugin. It makes available a Torrent specific api that allow adding torrent files, hash or magnet. The files will be saved in the site folder which makes it available to the site.
+This project is an attempt to integrate a Torrent client in ZeroNet as a plugin. It makes available a Torrent specific api for site that allows site to add torrent files, hash or magnet. The files will be saved in the site folder which makes it available to the site (e.g `data/1ChMNjXpW5vU5iXb9DSXzqAUfY46Pc2RTL/downloads`).
 
-It also allows streaming video files out of the box.
+It also allows streaming video files out of the box. When a chunk of video will be requested by the player the torrent plugin will verify if it is available and it not will prioritize this piece. This makes it possible to watch videos when they start being being downloaded.
+
+More information is available in the [FAQ](/FAQ.md).
+
+## Screenshots
+
+![Install](/screenshots/install.png)
+
+![Form](/screenshots/form.png)
+
+![Play](/screenshots/play.png)
 
 ## TODO
 
