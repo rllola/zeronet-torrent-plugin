@@ -89,6 +89,8 @@ class UiWebsocketPlugin(object):
         super(UiWebsocketPlugin, self).__init__(*args, **kwargs)
         UiWebsocketPlugin._instances.append(self)
 
+
+
     def actionGetVersion(self, to):
         self.response(to, {'version': VERSION})
 
@@ -193,10 +195,6 @@ class UiWebsocketPlugin(object):
         else:
             self.response(to, {'error': 'Torrent not found'})
 
-    #def __del__(self):
-    #    print 'DESTROY !'
-    #    if self in UiWebsocketPlugin._instances:
-    #        print 'Hola !'
 
 class TorrentFile(object):
     def __init__(self, torrent_handle, file, uirequest):
