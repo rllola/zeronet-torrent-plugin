@@ -4,6 +4,7 @@ import base64
 import gevent
 import sys
 import libtorrent
+from util.Flag import flag
 
 from .AlertEncoder import AlertEncoder
 
@@ -11,7 +12,7 @@ from Plugin import PluginManager
 
 libtorrent = libtorrent.libtorrent
 
-VERSION = '0.4.4'
+VERSION = '0.4.5'
 
 def popAlerts(session):
     while 1:
@@ -89,12 +90,20 @@ class UiWebsocketPlugin(object):
         super(UiWebsocketPlugin, self).__init__(*args, **kwargs)
         UiWebsocketPlugin._instances.append(self)
 
-
+    def hasSitePermission(self, address, cmd=None):
+        if "Torrent" in self.site.settings["permissions"]:
+            return True
+        else:
+            return False
 
     def actionGetVersion(self, to):
         self.response(to, {'version': VERSION})
 
+    @flag.no_multiuser
     def actionAddTorrent(self, to, torrentIdentifier):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         save_path = './data/' + self.site.address + '/downloads/'
         try:
             e = libtorrent.bdecode(base64.b64decode(torrentIdentifier))
@@ -130,6 +139,9 @@ class UiWebsocketPlugin(object):
             self.response(to, {'info_hash': str(info_hash)})
 
     def actionTorrentStatus(self, to, info_hash):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -143,6 +155,9 @@ class UiWebsocketPlugin(object):
             self.response(to, {'error': 'Torrent not found'})
 
     def actionGetTorrentInfo(self, to, info_hash):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+        
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -165,6 +180,9 @@ class UiWebsocketPlugin(object):
             self.response(to, {'error': 'Torrent not found'})
 
     def actionReadPiece(self, to, info_hash, piece_index):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -174,6 +192,9 @@ class UiWebsocketPlugin(object):
             self.response(to, {'error': 'Torrent not found'})
 
     def actionHavePiece(self, to, info_hash, piece_index):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
@@ -184,6 +205,9 @@ class UiWebsocketPlugin(object):
 
 
     def actionPrioritizePiece(self, to, info_hash, piece_index, new_priority):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         info_hash = libtorrent.sha1_hash(bytes.fromhex(info_hash))
         h = session.find_torrent(info_hash)
         if h.is_valid():
