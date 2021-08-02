@@ -4,6 +4,7 @@ import base64
 import gevent
 import sys
 import libtorrent
+from util.Flag import flag
 
 from .AlertEncoder import AlertEncoder
 
@@ -89,12 +90,22 @@ class UiWebsocketPlugin(object):
         super(UiWebsocketPlugin, self).__init__(*args, **kwargs)
         UiWebsocketPlugin._instances.append(self)
 
-
+    def hasSitePermission(self, address, cmd=None):
+        if super(UiWebsocketPlugin, self).hasSitePermission(address, cmd=cmd):
+            return True
+        elif "Torrent" in self.site.settings["permissions"]:
+            return True
+        else:
+            return False
 
     def actionGetVersion(self, to):
         self.response(to, {'version': VERSION})
 
+    @flag.no_multiuser
     def actionAddTorrent(self, to, torrentIdentifier):
+        if not self.hasSitePermission(self.site.address):
+            return self.response(to, {"error": "Forbidden"})
+
         save_path = './data/' + self.site.address + '/downloads/'
         try:
             e = libtorrent.bdecode(base64.b64decode(torrentIdentifier))
